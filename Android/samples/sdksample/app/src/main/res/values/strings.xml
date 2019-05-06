@@ -1,0 +1,16 @@
+<resources>
+
+<string name="app_name">Bing Maps Sample App</string>
+
+<string-array name="map_styles">
+    <item>Symbolic Light</item>
+    <item>Symbolic Dark</item>
+    <item>Symbolic Low Contrast</item>
+    <item>Photorealistic (no markup)</item>
+    <item>Photorealistic</item>
+    <item>High Contrast Light</item>
+    <item>High Contrast Dark</item>
+    <item>Custom</item>
+</string-array>
+
+</resources>

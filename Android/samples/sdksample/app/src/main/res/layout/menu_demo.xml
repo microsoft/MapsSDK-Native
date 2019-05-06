@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_demo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:orientation="vertical"
+    android:visibility="gone"
+    android:elevation="1dp"
+    android:background="#BBFFFFFF"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tile layer"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spinner_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/map_styles"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_style_custom"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="Custom"
+            android:background="@drawable/button_default"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Map projection"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mercator"
+            />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_projection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/SwitchTheme"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Globe"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="POIs"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_poi_tap"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="Add on tap"
+            android:background="@drawable/button_default"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_poi_search"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_marginLeft="12dp"
+            android:text="Add by search"
+            android:background="@drawable/button_default"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_poi_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_marginLeft="12dp"
+            android:text="Clear all"
+            android:background="@drawable/button_default"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

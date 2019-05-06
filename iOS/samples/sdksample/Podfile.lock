@@ -1,0 +1,16 @@
+PODS:
+  - BingMapsiOSSDK (1.0.1.0430)
+
+DEPENDENCIES:
+  - BingMapsiOSSDK
+
+SPEC REPOS:
+  https://msasg.visualstudio.com/DefaultCollection/Bing_Geospatial/_git/BingMapsiOSSDK:
+    - BingMapsiOSSDK
+
+SPEC CHECKSUMS:
+  BingMapsiOSSDK: 05b36456793ce60515437803b0d44e693b19c198
+
+PODFILE CHECKSUM: f3f08236b6725fde2ff63536822e62789b4ba03b
+
+COCOAPODS: 1.6.1

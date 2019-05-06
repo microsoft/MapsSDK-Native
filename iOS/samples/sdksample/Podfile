@@ -1,0 +1,12 @@
+# Uncomment the next line to define a global platform for your project
+source PLACEHOLDER'https://msasg.visualstudio.com/DefaultCollection/Bing_Geospatial/_git/BingMapsiOSSDK'
+
+platform :ios, '9.2'
+
+target 'BingMapsiOSSampleApp' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for BingMapsiOSSampleApp
+    pod PLACEHOLDER'MicrosoftMapsSDK', '~> 0.1.0'
+end
