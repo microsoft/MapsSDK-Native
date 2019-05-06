@@ -27,13 +27,6 @@ android {
 }
 
 repositories {
-    maven {
-        url 'https://msasg.pkgs.visualstudio.com/_packaging/BingMapsNativeAndriodSDK/maven/v1'
-        credentials {
-            username "AZURE_ARTIFACTS"
-            password azureArtifactsToken
-        }
-    }
 }
 
 dependencies {
