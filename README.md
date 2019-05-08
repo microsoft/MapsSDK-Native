@@ -15,7 +15,7 @@ The SDKs feature a native map control and an accompanying map services API set.
 
 The map control is powered by a full vector 3D map engine with [a number of standard mapping capabilities](https://github.com/Microsoft/MapsSDK-Native/wiki/Concepts_Table)
 including displaying icons, drawing polylines and polygons, and overlaying texture sources.  This engine brings in the same 3D Native
-support you know from our [Xaml Map Control](https://msdn.microsoft.com/windows/uwp/maps-and-location/index) in Windows 10, including
+support you know from our [XAML Map Control](https://msdn.microsoft.com/windows/uwp/maps-and-location/index) in Windows 10, including
 worldwide 3D elevation data (via our Digital Elevation Model).
 
 The native controls and map services API set will continue to mature and stabilize in future SDK releases!
