@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
             .setView(input)
             .setPositiveButton("Search", (DialogInterface dialog, int which) ->
-                LocalSearch.sendRequest(this, input.getText().toString(), new LocalSearch.Callback() {
+                LocalSearch.sendRequest(this, input.getText().toString(), mMapView.getBounds(), new LocalSearch.Callback() {
                     @Override
                     public void onSuccess(List<LocalSearch.Poi> results) {
                         clearPins();
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure() {
-                        Toast.makeText(MainActivity.this,"Network request failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"No search results found", Toast.LENGTH_LONG).show();
                     }
             }))
             .setNegativeButton("Cancel", (DialogInterface dialog, int which) -> dialog.cancel())

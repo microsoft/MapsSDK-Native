@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import com.microsoft.maps.GeoboundingBox;
 import com.microsoft.maps.Geolocation;
 
 import org.json.JSONArray;
@@ -16,13 +17,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 class LocalSearch {
 
     private static final String URL_ENDPOINT
             = "https://dev.virtualearth.net/REST/v1/LocalSearch/"
             + "?query={query}"
-            + "&userMapView=47.551145,-122.437374,47.694152,-122.086498"
+            + "&userMapView={bounds}"
             + "&key=" + BuildConfig.CREDENTIALS_KEY;
 
     static class Poi {
@@ -35,19 +37,23 @@ class LocalSearch {
         void onFailure();
     }
 
-    static void sendRequest(Context context, String query, Callback callback) {
+    static void sendRequest(Context context, String query, GeoboundingBox bounds, Callback callback) {
         if (query == null || query.isEmpty()) {
             Toast.makeText(context, "Invalid query", Toast.LENGTH_LONG).show();
             return;
         }
 
+        String boundsStr = String.format(Locale.ROOT,
+            "%.6f,%.6f,%.6f,%.6f",
+            bounds.south, bounds.west, bounds.north, bounds.east);
+
         RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(new StringRequest(
             Request.Method.GET,
-            URL_ENDPOINT.replace("{query}", query),
+            URL_ENDPOINT.replace("{query}", query).replace("{bounds}", boundsStr),
             (String response) -> {
                 List<Poi> results = parse(response);
-                if (results == null) {
+                if (results == null || results.isEmpty()) {
                     callback.onFailure();
                     return;
                 }
