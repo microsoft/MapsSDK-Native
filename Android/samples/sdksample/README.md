@@ -54,6 +54,16 @@ Next, in the same file, inside `buildTypes` block, insert following block next t
 > }
 >```
 
+Then, before `dependencies` block, insert following snippet at top level to add our Maven repo:
+
+>```
+> repositories {
+>     maven {
+>         url  "https://microsoft-maps.bintray.com/Maven"
+>     }
+> }
+>```
+
 And finally, inside `dependencies` block, add the following line:
 
 >```
