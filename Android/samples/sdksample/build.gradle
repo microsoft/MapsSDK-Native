@@ -18,9 +18,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-            url  "https://microsoft-maps.bintray.com/Maven"
-        }
     }
 }
 
