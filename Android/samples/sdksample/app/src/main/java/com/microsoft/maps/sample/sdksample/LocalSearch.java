@@ -1,4 +1,4 @@
-package com.microsoft.maps.sample;
+package com.microsoft.maps.sample.sdksample;
 
 import android.content.Context;
 import android.widget.Toast;

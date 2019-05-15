@@ -1,4 +1,4 @@
-package com.microsoft.maps.sample;
+package com.microsoft.maps.sample.sdksample;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.microsoft.maps.sample", appContext.getPackageName());
+        assertEquals("com.microsoft.maps.sample.sdksample", appContext.getPackageName());
     }
 }

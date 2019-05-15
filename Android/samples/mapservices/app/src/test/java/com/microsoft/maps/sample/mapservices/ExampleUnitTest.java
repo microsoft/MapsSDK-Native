@@ -1,4 +1,4 @@
-package com.microsoft.maps.sample;
+package com.microsoft.maps.sample.mapservices;
 
 import org.junit.Test;
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_demo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:orientation="vertical"
+    android:visibility="gone"
+    android:elevation="1dp"
+    android:background="#DDFFFFFF"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Geocoding"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_poi_search"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="Geocode by query"
+            android:textSize="12sp"
+            android:background="@drawable/button_default"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_poi_tap"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Rev. geocode on tap"
+            android:textSize="12sp"
+            android:background="@drawable/button_default"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_poi_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="8dp"
+            android:text="Clear"
+            android:textSize="12sp"
+            android:background="@drawable/button_default"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

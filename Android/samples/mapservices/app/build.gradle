@@ -4,7 +4,7 @@ apply from: 'secrets.gradle'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.microsoft.maps.sample.sdksample"
+        applicationId "com.microsoft.maps.sample.mapservices"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
