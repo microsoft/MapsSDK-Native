@@ -5,3 +5,8 @@ You will need an Android app development IDE and an Android device or emulator (
 
 > You can find API reference docs and other content for Android on the
 > [Bing Mapsd SDK for Android docs site](https://docs.microsoft.com/bingmaps/sdk-native) at docs.microsoft.com.
+
+## List of available samples
+
+* [SDK sample](samples/sdksample/README.md) showcasing the map control and its features.
+* [Search sample](samples/search/README.md) showcasing map services search capabilities.
