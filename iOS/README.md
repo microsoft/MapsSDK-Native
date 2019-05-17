@@ -5,3 +5,8 @@ You will need an iOS app development IDE and an iOS device or emulator to use th
 
 > You can find API reference docs and other content for iOS on the
 > [Bing Maps SDK for iOS docs site](https://docs.microsoft.com/en-us/bingmaps/sdk-native) at docs.microsoft.com.
+
+## List of available samples
+
+* [SDK sample](samples/sdksample/README.md) showcasing the map control and its features.
+* [Search sample](samples/search/README.md) showcasing map services search capabilities.

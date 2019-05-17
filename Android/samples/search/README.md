@@ -54,3 +54,18 @@ Say, we want to geocode Bellevue, Washington. Since there's multiple Bellevues, 
 >```
 
 If status code is `SUCCESS`, the response is guaranteed to contain at least one location.
+
+But what if we're not sure that our reference point is correct? Let's reverse geocode it!
+
+>```java
+> MapLocationFinder.findLocationsAt(referencePoint, null, new MapLocationCallback() {
+>     @Override
+>     public void onResult(MapLocationFinderResult result) {
+>         if (result.getStatus() == MapLocationFinderStatus.SUCCESS) {
+>             if (result.getLocations().get(0).getAddress().getLocality().equals("Bellevue")) {
+>                 // Yay!
+>             }
+>         }
+>     }
+> });
+>```

@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.microsoft.maps.AltitudeReferenceSystem;
 import com.microsoft.maps.GeoboundingBox;
 import com.microsoft.maps.Geolocation;
 import com.microsoft.maps.MapAnimationKind;
@@ -98,14 +99,21 @@ public class MainActivity extends AppCompatActivity {
                             MapLocationFinderStatus status = result.getStatus();
 
                             if (status == MapLocationFinderStatus.SUCCESS) {
-                                new AlertDialog.Builder(this)
-                                    .setTitle("Reverse geocode result")
-                                    .setMessage(convertMapLocationToString(result.getLocations().get(0)))
-                                    .setPositiveButton("OK", null)
-                                    .show();
+                                if (result.getLocations().isEmpty()) {
+                                    Toast.makeText(MainActivity.this, "Unable to reverse geocode this location", Toast.LENGTH_LONG).show();
+                                    return;
+                                }
 
-                            } else if (status == MapLocationFinderStatus.NOT_FOUND) {
-                                Toast.makeText(MainActivity.this, "Unable to reverse geocode this location", Toast.LENGTH_LONG).show();
+                                MapLocation resultLocation = result.getLocations().get(0);
+                                Geolocation pinLocation = new Geolocation(
+                                    location.get().getLatitude(),
+                                    location.get().getLongitude(),
+                                    0);
+                                String pinTitle = String.format(
+                                    Locale.ROOT,
+                                    "%s (%s)",
+                                    resultLocation.getDisplayName(), resultLocation.getEntityType());
+                                addPin(pinLocation, pinTitle);
 
                             } else {
                                 Toast.makeText(MainActivity.this, "Error processing the request", Toast.LENGTH_LONG).show();
@@ -142,12 +150,6 @@ public class MainActivity extends AppCompatActivity {
         if (mMapView != null) {
             mMapView.suspend();
         }
-    }
-
-    private String convertMapLocationToString(MapLocation mapLocation) {
-        return String.format(Locale.ROOT,
-            "%s (%s)",
-            mapLocation.getDisplayName(), mapLocation.getEntityType());
     }
 
     private void addPin(Geolocation location, String title) {
@@ -199,15 +201,22 @@ public class MainActivity extends AppCompatActivity {
                         MapLocationFinderStatus status = result.getStatus();
 
                         if (status == MapLocationFinderStatus.SUCCESS) {
+                            if (result.getLocations().isEmpty()) {
+                                Toast.makeText(MainActivity.this, "No results were found", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+
                             List<Geolocation> points = new ArrayList<>();
                             for (MapLocation mapLocation : result.getLocations()) {
-                                addPin(mapLocation.getPoint(), mapLocation.getDisplayName());
+                                Geolocation pinLocation = new Geolocation(
+                                    mapLocation.getPoint().getLatitude(),
+                                    mapLocation.getPoint().getLongitude(),
+                                    0,
+                                    AltitudeReferenceSystem.TERRAIN);
+                                addPin(pinLocation, mapLocation.getDisplayName());
                                 points.add(mapLocation.getPoint());
                             }
                             mMapView.setScene(MapScene.createFromLocations(points), MapAnimationKind.DEFAULT);
-
-                        } else if (status == MapLocationFinderStatus.NOT_FOUND) {
-                            Toast.makeText(MainActivity.this, "No results were found", Toast.LENGTH_LONG).show();
 
                         } else {
                             Toast.makeText(MainActivity.this, "Error processing the request, code " + status.toString(), Toast.LENGTH_LONG).show();
