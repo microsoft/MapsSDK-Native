@@ -8,5 +8,5 @@ You will need an iOS app development IDE and an iOS device or emulator to use th
 
 ## List of available samples
 
-* [SDK sample](samples/sdksample/README.md) showcasing the map control and its features.
+* [SDK sample](samples/sdksample/README.md) showcasing how to get started and use the map control.
 * [Search sample](samples/search/README.md) showcasing map services search capabilities.
