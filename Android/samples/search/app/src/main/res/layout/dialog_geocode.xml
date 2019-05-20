@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <EditText
+        android:id="@+id/query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Query"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <EditText
+            android:id="@+id/culture"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Culture (e.g. &quot;en&quot;)"
+            />
+
+        <EditText
+            android:id="@+id/region"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Region (e.g. &quot;US&quot;)"
+            />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/check_reference_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use screen center as reference location"
+        />
+
+    <CheckBox
+        android:id="@+id/check_reference_boundingbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use screen bounds as reference bounding box"
+        />
+
+
+</LinearLayout>

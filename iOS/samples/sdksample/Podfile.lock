@@ -1,16 +1,16 @@
 PODS:
-  - BingMapsiOSSDK (1.0.1.0430)
+  - MicrosoftMapsSDK (0.1.1)
 
 DEPENDENCIES:
-  - BingMapsiOSSDK
+  - MicrosoftMapsSDK (~> 0.1.1)
 
 SPEC REPOS:
-  https://msasg.visualstudio.com/DefaultCollection/Bing_Geospatial/_git/BingMapsiOSSDK:
-    - BingMapsiOSSDK
+  https://github.com/cocoapods/specs.git:
+    - MicrosoftMapsSDK
 
 SPEC CHECKSUMS:
-  BingMapsiOSSDK: 05b36456793ce60515437803b0d44e693b19c198
+  MicrosoftMapsSDK: cfabdcf1dd681f7a756c668ef078966f65f0a238
 
-PODFILE CHECKSUM: f3f08236b6725fde2ff63536822e62789b4ba03b
+PODFILE CHECKSUM: 65b8316cb1fa484f901f640f170b6c97a6a1047f
 
 COCOAPODS: 1.6.1

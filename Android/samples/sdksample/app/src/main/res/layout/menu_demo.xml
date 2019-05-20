@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:visibility="gone"
     android:elevation="1dp"
-    android:background="#BBFFFFFF"
+    android:background="#DDFFFFFF"
     >
 
     <TextView
