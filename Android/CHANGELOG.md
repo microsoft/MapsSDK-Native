@@ -1,6 +1,16 @@
 # Bing Maps SDK for Android
 
 
+Version 0.1.2 - May 2019
+========================
+## Improvements
+- Improves default set scene animations.
+- Includes optimizations for raster map render mode.
+## Resolved Issues
+- Fixes a few race conditions.
+- Fixes incorrect status code for reverse geocoding.
+- Fixes a styling issue in raster map render mode.
+
 Version 0.1.1 - May 2019
 ========================
 ## Resolved Issues
