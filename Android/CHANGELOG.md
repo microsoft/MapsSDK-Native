@@ -1,5 +1,11 @@
 # Bing Maps SDK for Android
 
+Version 0.1.3 - June 2019
+=========================
+## Improvements
+- Improves pan gesture.
+## Resolved Issues
+- Fixes unexpected map movements after rotation and stretch & pinch gestures.
 
 Version 0.1.2 - May 2019
 ========================

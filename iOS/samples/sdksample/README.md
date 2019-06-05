@@ -58,7 +58,7 @@ Open the newly created `Podfile` and specify the following:
 >   use_frameworks!
 >
 >   # Pods for SampleApp
->   pod 'MicrosoftMapsSDK', '~> 0.1.2'
+>   pod 'MicrosoftMapsSDK', '~> 0.1.3'
 > end
 >```
 
