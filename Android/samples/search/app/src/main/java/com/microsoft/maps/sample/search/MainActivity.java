@@ -99,10 +99,6 @@ public class MainActivity extends AppCompatActivity {
                             MapLocationFinderStatus status = result.getStatus();
 
                             if (status == MapLocationFinderStatus.SUCCESS) {
-                                if (result.getLocations().isEmpty()) {
-                                    Toast.makeText(MainActivity.this, "Unable to reverse geocode this location", Toast.LENGTH_LONG).show();
-                                    return;
-                                }
 
                                 MapLocation resultLocation = result.getLocations().get(0);
                                 Geolocation pinLocation = new Geolocation(
@@ -113,7 +109,11 @@ public class MainActivity extends AppCompatActivity {
                                     Locale.ROOT,
                                     "%s (%s)",
                                     resultLocation.getDisplayName(), resultLocation.getEntityType());
+
                                 addPin(pinLocation, pinTitle);
+
+                            } else if (status == MapLocationFinderStatus.EMPTY_RESPONSE) {
+                                Toast.makeText(MainActivity.this, "Unable to reverse geocode this location", Toast.LENGTH_LONG).show();
 
                             } else {
                                 Toast.makeText(MainActivity.this, "Error processing the request", Toast.LENGTH_LONG).show();
@@ -201,12 +201,8 @@ public class MainActivity extends AppCompatActivity {
                         MapLocationFinderStatus status = result.getStatus();
 
                         if (status == MapLocationFinderStatus.SUCCESS) {
-                            if (result.getLocations().isEmpty()) {
-                                Toast.makeText(MainActivity.this, "No results were found", Toast.LENGTH_LONG).show();
-                                return;
-                            }
-
                             List<Geolocation> points = new ArrayList<>();
+
                             for (MapLocation mapLocation : result.getLocations()) {
                                 Geolocation pinLocation = new Geolocation(
                                     mapLocation.getPoint().getLatitude(),
@@ -217,6 +213,9 @@ public class MainActivity extends AppCompatActivity {
                                 points.add(mapLocation.getPoint());
                             }
                             mMapView.setScene(MapScene.createFromLocations(points), MapAnimationKind.DEFAULT);
+
+                        } else if (status == MapLocationFinderStatus.EMPTY_RESPONSE) {
+                            Toast.makeText(MainActivity.this, "No results were found", Toast.LENGTH_LONG).show();
 
                         } else {
                             Toast.makeText(MainActivity.this, "Error processing the request, code " + status.toString(), Toast.LENGTH_LONG).show();
