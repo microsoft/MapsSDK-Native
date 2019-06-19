@@ -1,5 +1,10 @@
 # Bing Maps SDK for iOS
 
+Version 0.1.4 - June 2019
+=========================
+## Resolved Issues
+- Fixes a crash on map dispose
+
 Version 0.1.3 - June 2019
 =========================
 ## Improvements

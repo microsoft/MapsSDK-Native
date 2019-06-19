@@ -195,7 +195,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-BingMapsSdkSample/Pods-BingMapsSdkSample-frameworks.sh",
-				"${PODS_ROOT}/MicrosoftMapsSDK/MicrosoftMapsSDK-0.1.3/MicrosoftMaps.framework",
+				"${PODS_ROOT}/MicrosoftMapsSDK/MicrosoftMapsSDK-0.1.4/MicrosoftMaps.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
