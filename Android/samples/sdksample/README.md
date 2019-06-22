@@ -67,7 +67,7 @@ Then, before `dependencies` block, insert following snippet at top level to add 
 And finally, inside `dependencies` block, add the following line:
 
 >```
-> implementation 'com.microsoft.maps:maps-sdk:0.1.3'
+> implementation 'com.microsoft.maps:maps-sdk:0.1.4'
 >```
 
 ## Adding a map view to your activity
