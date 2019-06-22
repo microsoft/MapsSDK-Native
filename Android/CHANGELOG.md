@@ -3,8 +3,8 @@
 Version 0.1.4 - June 2019
 =========================
 ## Resolved Issues
-- Fixes a crash on map dispose
-- Fixes start continuous rotate,tilt,zoom not working
+- Fixes a crash on map dispose.
+- Fixes start continuous rotate, tilt, and zoom not working.
 
 Version 0.1.3 - June 2019
 =========================
