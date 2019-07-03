@@ -45,7 +45,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
             pinImage = MSMapImage(svgImage: svgData)
         } catch {}
 
-        mapView.addUserDidTapHandler{ (point:CGPoint) -> Bool in
+        mapView.addUserDidTapHandler{ (point:CGPoint, location:MSGeolocation?) -> Bool in
             DispatchQueue.main.sync{
                 guard self.addOnTapSwitch.isOn else {
                     return false
