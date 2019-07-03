@@ -1,5 +1,14 @@
 # Bing Maps SDK for iOS
 
+Version 0.2.0 - July 2019
+=========================
+## Breaking changes
+- Renames enum MSMapCameraChangeCause to MSMapCameraChangeReason
+## Improvements
+- Adds default values for MSMapFlyout properties PlacementOffset and ZIndex
+## Resolved Issues
+- Fixes a crash caused by calling MSMapIcon::isFlyoutVisible when flyout does not exis
+
 Version 0.1.4 - June 2019
 =========================
 ## Resolved Issues

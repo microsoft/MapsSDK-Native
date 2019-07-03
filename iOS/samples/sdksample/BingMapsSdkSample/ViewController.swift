@@ -87,7 +87,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         } catch{
         }
 
-        mapView.addUserDidTapHandler{ (point:CGPoint) -> Bool in
+        mapView.addUserDidTapHandler{ (point:CGPoint, location:MSGeolocation?) -> Bool in
             DispatchQueue.main.sync{
                 if self.addOnTapSwitch.isOn {
                     var location:MSGeolocation!
