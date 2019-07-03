@@ -3,6 +3,7 @@ package com.microsoft.maps.sample.search;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -33,7 +34,6 @@ import com.microsoft.maps.Optional;
 import com.microsoft.maps.search.MapLocation;
 import com.microsoft.maps.search.MapLocationFinder;
 import com.microsoft.maps.search.MapLocationFinderResult;
-import com.microsoft.maps.search.MapLocationFinderStatus;
 import com.microsoft.maps.search.MapLocationOptions;
 
 import java.util.ArrayList;
@@ -96,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
                         location.get(),
                         null,
                         (MapLocationFinderResult result) -> {
-                            MapLocationFinderStatus status = result.getStatus();
+                            MapLocationFinder.Status status = result.getStatus();
 
-                            if (status == MapLocationFinderStatus.SUCCESS) {
+                            if (status == MapLocationFinder.Status.SUCCESS) {
 
                                 MapLocation resultLocation = result.getLocations().get(0);
                                 Geolocation pinLocation = new Geolocation(
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 addPin(pinLocation, pinTitle);
 
-                            } else if (status == MapLocationFinderStatus.EMPTY_RESPONSE) {
+                            } else if (status == MapLocationFinder.Status.EMPTY_RESPONSE) {
                                 Toast.makeText(MainActivity.this, "Unable to reverse geocode this location", Toast.LENGTH_LONG).show();
 
                             } else {
@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         pushpin.setLocation(location);
         pushpin.setTitle(title);
         pushpin.setImage(mPinImage);
+        pushpin.setNormalizedAnchorPoint(new PointF(0.5f, 1f));
         mPinLayer.getElements().add(pushpin);
     }
 
@@ -198,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     MapLocationFinder.findLocations(query, referenceLocation, referenceBoundingBox, options, (MapLocationFinderResult result) -> {
-                        MapLocationFinderStatus status = result.getStatus();
+                        MapLocationFinder.Status status = result.getStatus();
 
-                        if (status == MapLocationFinderStatus.SUCCESS) {
+                        if (status == MapLocationFinder.Status.SUCCESS) {
                             List<Geolocation> points = new ArrayList<>();
 
                             for (MapLocation mapLocation : result.getLocations()) {
@@ -212,9 +213,14 @@ public class MainActivity extends AppCompatActivity {
                                 addPin(pinLocation, mapLocation.getDisplayName());
                                 points.add(mapLocation.getPoint());
                             }
-                            mMapView.setScene(MapScene.createFromLocations(points), MapAnimationKind.DEFAULT);
 
-                        } else if (status == MapLocationFinderStatus.EMPTY_RESPONSE) {
+                            if (points.size() > 1) {
+                                mMapView.setScene(MapScene.createFromLocations(points), MapAnimationKind.DEFAULT);
+                            } else if (points.size() == 1) {
+                                mMapView.setScene(MapScene.createFromLocation(points.get(0)), MapAnimationKind.DEFAULT);
+                            }
+
+                        } else if (status == MapLocationFinder.Status.EMPTY_RESPONSE) {
                             Toast.makeText(MainActivity.this, "No results were found", Toast.LENGTH_LONG).show();
 
                         } else {

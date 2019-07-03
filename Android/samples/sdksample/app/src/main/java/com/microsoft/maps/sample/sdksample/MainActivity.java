@@ -3,6 +3,7 @@ package com.microsoft.maps.sample.sdksample;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -164,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         pushpin.setLocation(location);
         pushpin.setTitle(title);
         pushpin.setImage(mPinImage);
+        pushpin.setNormalizedAnchorPoint(new PointF(0.5f, 1f));
         mPinLayer.getElements().add(pushpin);
     }
 
