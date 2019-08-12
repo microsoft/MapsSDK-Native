@@ -30,7 +30,6 @@ import com.microsoft.maps.MapScene;
 import com.microsoft.maps.MapServices;
 import com.microsoft.maps.MapTappedEventArgs;
 import com.microsoft.maps.MapView;
-import com.microsoft.maps.Optional;
 import com.microsoft.maps.search.MapLocation;
 import com.microsoft.maps.search.MapLocationFinder;
 import com.microsoft.maps.search.MapLocationFinderResult;
@@ -90,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
         });
         mMapView.addOnMapTappedListener((MapTappedEventArgs e) -> {
             if ((boolean) mButtonPoiTap.getTag()) {
-                Optional<Geolocation> location = mMapView.getLocationFromOffset(e.position);
-                if (location.isPresent()) {
+                Geolocation location = mMapView.getLocationFromOffset(e.position);
+                if (location != null) {
                     MapLocationFinder.findLocationsAt(
-                        location.get(),
+                        location,
                         null,
                         (MapLocationFinderResult result) -> {
                             MapLocationFinder.Status status = result.getStatus();
@@ -102,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 MapLocation resultLocation = result.getLocations().get(0);
                                 Geolocation pinLocation = new Geolocation(
-                                    location.get().getLatitude(),
-                                    location.get().getLongitude(),
+                                    location.getLatitude(),
+                                    location.getLongitude(),
                                     0);
                                 String pinTitle = String.format(
                                     Locale.ROOT,
@@ -140,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (mMapView != null) {
-            mMapView.resume();
+            mMapView.onResume();
         }
     }
 
@@ -148,7 +147,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if (mMapView != null) {
-            mMapView.suspend();
+            mMapView.onPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mMapView != null) {
+            mMapView.onDestroy();
+        }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        if (mMapView != null) {
+            mMapView.onLowMemory();
         }
     }
 

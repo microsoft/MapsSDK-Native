@@ -34,7 +34,6 @@ import com.microsoft.maps.MapStyleSheet;
 import com.microsoft.maps.MapStyleSheets;
 import com.microsoft.maps.MapTappedEventArgs;
 import com.microsoft.maps.MapView;
-import com.microsoft.maps.Optional;
 
 import java.util.List;
 
@@ -124,9 +123,9 @@ public class MainActivity extends AppCompatActivity {
         });
         mMapView.addOnMapTappedListener((MapTappedEventArgs e) -> {
             if ((boolean) mButtonPoiTap.getTag()) {
-                Optional<Geolocation> location = mMapView.getLocationFromOffset(e.position);
-                if (location.isPresent()) {
-                    addPin(location.get(), "");
+                Geolocation location = mMapView.getLocationFromOffset(e.position);
+                if (location != null) {
+                    addPin(location, "");
                 }
             }
             return false;
@@ -148,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (mMapView != null) {
-            mMapView.resume();
+            mMapView.onResume();
         }
     }
 
@@ -156,7 +155,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if (mMapView != null) {
-            mMapView.suspend();
+            mMapView.onPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mMapView != null) {
+            mMapView.onDestroy();
+        }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        if (mMapView != null) {
+            mMapView.onLowMemory();
         }
     }
 
@@ -183,9 +198,9 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
             .setView(input)
             .setPositiveButton("Set", (DialogInterface dialog, int which) -> {
-                Optional<MapStyleSheet> style = MapStyleSheet.fromJson(input.getText().toString());
-                if (style.isPresent()) {
-                    mMapView.setMapStyleSheet(style.get());
+                MapStyleSheet style = MapStyleSheet.fromJson(input.getText().toString());
+                if (style != null) {
+                    mMapView.setMapStyleSheet(style);
                 } else {
                     mStyleSpinner.setSelection(mStyleSpinnerPosition);
                     Toast.makeText(MainActivity.this,"Custom style JSON is invalid", Toast.LENGTH_LONG).show();
