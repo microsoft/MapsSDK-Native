@@ -45,18 +45,13 @@ class ViewController: UIViewController, UIPickerViewDelegate {
             pinImage = MSMapImage(svgImage: svgData)
         } catch {}
 
-        mapView.addUserDidTapHandler{ (point:CGPoint) -> Bool in
+        mapView.addUserDidTapHandler{ (point:CGPoint, geolocation:MSGeolocation?) -> Bool in
             DispatchQueue.main.sync{
                 guard self.addOnTapSwitch.isOn else {
                     return false
                 }
 
-                var location:MSGeolocation!
-                guard self.mapView.try(toConvertOffset: point, intoLocation: &location) else {
-                    return false
-                }
-
-                MSMapLocationFinder.findLocations(at: location, with: nil, handleResultWith: { (result: MSMapLocationFinderResult) in
+                MSMapLocationFinder.findLocations(at: geolocation!, with: nil, handleResultWith: { (result: MSMapLocationFinderResult) in
                     switch result.status {
                     case MSMapLocationFinderStatus.success:
                         if result.locations.isEmpty {
@@ -64,10 +59,11 @@ class ViewController: UIViewController, UIPickerViewDelegate {
                             return
                         }
                         let pushpin = MSMapIcon()
-                        pushpin.location = location
+                        pushpin.location = geolocation!
                         pushpin.title = result.locations[0].address.formattedAddress
                         if self.pinImage != nil {
                             pushpin.image = self.pinImage
+                            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1)
                         }
                         self.pinLayer.elements.add(pushpin)
                     default:
@@ -140,12 +136,17 @@ extension ViewController: GeocodeAlertDelegate {
                     pushpin.title = mapLocation.displayName
                     if self.pinImage != nil {
                         pushpin.image = self.pinImage
+                        pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1)
                     }
                     self.pinLayer.elements.add(pushpin)
 
                     locations.add(mapLocation.point)
                 }
-                self.mapView.setScene(MSMapScene(locations: locations as! [MSGeolocation]), with: MSMapAnimationKind.default)
+                if (locations.count > 1) {
+                    self.mapView.setScene(MSMapScene(locations: locations as! [MSGeolocation]), with: MSMapAnimationKind.default)
+                } else {
+                    self.mapView.setScene(MSMapScene(location: locations[0] as! MSGeolocation), with: MSMapAnimationKind.default)
+                }
             default:
                 self.showMessage("Error processing the request")
             }

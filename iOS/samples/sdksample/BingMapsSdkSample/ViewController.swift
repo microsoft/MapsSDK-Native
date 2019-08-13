@@ -87,20 +87,17 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         } catch{
         }
 
-        mapView.addUserDidTapHandler{ (point:CGPoint) -> Bool in
+        mapView.addUserDidTapHandler{ (point:CGPoint, geolocation:MSGeolocation?) -> Bool in
             DispatchQueue.main.sync{
                 if self.addOnTapSwitch.isOn {
-                    var location:MSGeolocation!
-                    if self.mapView.try(toConvertOffset: point, intoLocation: &location) {
-                        let pushpin = MSMapIcon()
-                        pushpin.location = location
-                        if self.pinImage != nil {
-                            pushpin.image = self.pinImage
-                        }
-                        self.pinLayer.elements.add(pushpin)
-
-                        return true
+                    let pushpin = MSMapIcon()
+                    pushpin.location = geolocation!
+                    if self.pinImage != nil {
+                        pushpin.image = self.pinImage
                     }
+                    self.pinLayer.elements.add(pushpin)
+
+                    return true
                 }
                 return false
             }
