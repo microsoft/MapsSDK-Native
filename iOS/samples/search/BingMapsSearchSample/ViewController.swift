@@ -59,7 +59,9 @@ class ViewController: UIViewController, UIPickerViewDelegate {
                             return
                         }
                         let pushpin = MSMapIcon()
-                        pushpin.location = geolocation!
+                        pushpin.location = MSGeolocation(
+                            latitude: geolocation!.latitude,
+                            longitude: geolocation!.longitude)
                         pushpin.title = result.locations[0].address.formattedAddress
                         if self.pinImage != nil {
                             pushpin.image = self.pinImage
@@ -122,17 +124,16 @@ extension ViewController: GeocodeAlertDelegate {
         MSMapLocationFinder.findLocations(query, withReferencePoint: referenceLocation, withReferenceBoundingBox: referenceBoundingBox, with: options, handleResultWith: { (result: MSMapLocationFinderResult) in
             switch result.status {
             case MSMapLocationFinderStatus.success:
-                if result.locations.isEmpty {
-                    self.showMessage("No result was found")
-                    return
-                }
-
                 self.pinLayer.elements.clear()
                 let locations = NSMutableArray()
 
                 for mapLocation in result.locations {
                     let pushpin = MSMapIcon()
-                    pushpin.location = mapLocation.point
+                    pushpin.location = MSGeolocation(
+                        latitude: mapLocation.point.latitude,
+                        longitude: mapLocation.point.longitude,
+                        altitude: 0,
+                        altitudeReferenceSystem: MSMapAltitudeReferenceSystem.terrain)
                     pushpin.title = mapLocation.displayName
                     if self.pinImage != nil {
                         pushpin.image = self.pinImage
@@ -147,6 +148,8 @@ extension ViewController: GeocodeAlertDelegate {
                 } else {
                     self.mapView.setScene(MSMapScene(location: locations[0] as! MSGeolocation), with: MSMapAnimationKind.default)
                 }
+            case MSMapLocationFinderStatus.emptyResponse:
+                self.showMessage("No result was found")
             default:
                 self.showMessage("Error processing the request")
             }
