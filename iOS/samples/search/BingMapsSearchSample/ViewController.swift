@@ -4,7 +4,7 @@ import MicrosoftMaps
 class ViewController: UIViewController, UIPickerViewDelegate {
 
     let CREDENTIALS_KEY = Bundle.main.infoDictionary?["CREDENTIALS_KEY"] as! String
-    let LOCATION_LAKE_WASHINGTON = MSGeolocation(latitude: 47.609466, longitude: -122.265185)
+    let LOCATION_LAKE_WASHINGTON = MSGeopoint(latitude: 47.609466, longitude: -122.265185)
 
     var pinLayer: MSMapElementLayer!
     var pinImage: MSMapImage!
@@ -45,36 +45,34 @@ class ViewController: UIViewController, UIPickerViewDelegate {
             pinImage = MSMapImage(svgImage: svgData)
         } catch {}
 
-        mapView.addUserDidTapHandler{ (point:CGPoint, location:MSGeolocation?) -> Bool in
-            DispatchQueue.main.sync{
-                guard self.addOnTapSwitch.isOn else {
-                    return false
-                }
-
-                MSMapLocationFinder.findLocations(at: location!, with: nil, handleResultWith: { (result: MSMapLocationFinderResult) in
-                    switch result.status {
-                    case MSMapLocationFinderStatus.success:
-                        if result.locations.isEmpty {
-                            self.showMessage("No search result found")
-                            return
-                        }
-                        let pushpin = MSMapIcon()
-                        pushpin.location = MSGeolocation(
-                            latitude: location!.latitude,
-                            longitude: location!.longitude)
-                        pushpin.title = result.locations[0].address.formattedAddress
-                        if self.pinImage != nil {
-                            pushpin.image = self.pinImage
-                            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1)
-                        }
-                        self.pinLayer.elements.add(pushpin)
-                    default:
-                        self.showMessage("Error processing the request")
-                    }
-                })
-
-                return true
+        mapView.addUserDidTapHandler{ (point:CGPoint, location:MSGeopoint?) -> Bool in
+            guard self.addOnTapSwitch.isOn else {
+                return false
             }
+
+            MSMapLocationFinder.findLocations(at: location!, with: nil, handleResultWith: { (result: MSMapLocationFinderResult) in
+                switch result.status {
+                case MSMapLocationFinderStatus.success:
+                    if result.locations.isEmpty {
+                        self.showMessage("No search result found")
+                        return
+                    }
+                    let pushpin = MSMapIcon()
+                    pushpin.location = MSGeopoint(
+                        latitude: location!.position.latitude,
+                        longitude: location!.position.longitude)
+                    pushpin.title = result.locations[0].address.formattedAddress
+                    if self.pinImage != nil {
+                        pushpin.image = self.pinImage
+                        pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1)
+                    }
+                    self.pinLayer.elements.add(pushpin)
+                default:
+                    self.showMessage("Error processing the request")
+                }
+            })
+
+            return true
         }
 
         setupDemoMenu()
@@ -104,7 +102,7 @@ extension ViewController: GeocodeAlertDelegate {
             return
         }
 
-        var referenceLocation: MSGeolocation?
+        var referenceLocation: MSGeopoint?
         if useLocation {
             referenceLocation = self.mapView.mapCenter
         }
@@ -129,9 +127,9 @@ extension ViewController: GeocodeAlertDelegate {
 
                 for mapLocation in result.locations {
                     let pushpin = MSMapIcon()
-                    pushpin.location = MSGeolocation(
-                        latitude: mapLocation.point.latitude,
-                        longitude: mapLocation.point.longitude,
+                    pushpin.location = MSGeopoint(
+                        latitude: mapLocation.point.position.latitude,
+                        longitude: mapLocation.point.position.longitude,
                         altitude: 0,
                         altitudeReferenceSystem: MSMapAltitudeReferenceSystem.terrain)
                     pushpin.title = mapLocation.displayName
@@ -144,9 +142,9 @@ extension ViewController: GeocodeAlertDelegate {
                     locations.add(mapLocation.point)
                 }
                 if (locations.count > 1) {
-                    self.mapView.setScene(MSMapScene(locations: locations as! [MSGeolocation]), with: MSMapAnimationKind.default)
+                    self.mapView.setScene(MSMapScene(locations: locations as! [MSGeopoint]), with: MSMapAnimationKind.default)
                 } else {
-                    self.mapView.setScene(MSMapScene(location: locations[0] as! MSGeolocation), with: MSMapAnimationKind.default)
+                    self.mapView.setScene(MSMapScene(location: locations[0] as! MSGeopoint), with: MSMapAnimationKind.default)
                 }
             case MSMapLocationFinderStatus.emptyResponse:
                 self.showMessage("No result was found")

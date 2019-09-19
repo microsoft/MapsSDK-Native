@@ -10,7 +10,7 @@ class LocalSearch: NSObject {
 
     struct Poi {
         var name: NSString!
-        var location:MSGeolocation!
+        var location:MSGeopoint!
     }
 
     static func sendRequest(queryOptional:String?, bounds:MSGeoboundingBox, _completion: @escaping (Array<Poi>?) -> Void ) {
@@ -60,7 +60,7 @@ class LocalSearch: NSObject {
                         poi.name = resourceObjDictionary["name"] as? NSString
                         let pointJObj = resourceObjDictionary["point"] as! NSDictionary
                         let coordinatesJArr = pointJObj["coordinates"] as! NSArray
-                        poi.location = MSGeolocation(latitude:coordinatesJArr[0] as! Double, longitude:coordinatesJArr[1] as! Double, altitude: 0, altitudeReferenceSystem: .surface)
+                        poi.location = MSGeopoint(latitude:coordinatesJArr[0] as! Double, longitude:coordinatesJArr[1] as! Double, altitude: 0, altitudeReferenceSystem: .surface)
                         results.append(poi)
                     }
                 }
