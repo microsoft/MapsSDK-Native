@@ -22,7 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.microsoft.maps.Geolocation;
+import com.microsoft.maps.Geopoint;
 import com.microsoft.maps.MapAnimationKind;
 import com.microsoft.maps.MapElementLayer;
 import com.microsoft.maps.MapIcon;
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
     };
     private static final int POSITION_CUSTOM = MAP_STYLES.length;
 
-    private static final Geolocation LOCATION_LAKE_WASHINGTON =
-            new Geolocation(47.609466, -122.265185);
+    private static final Geopoint LOCATION_LAKE_WASHINGTON =
+            new Geopoint(47.609466, -122.265185);
 
     private MapView mMapView;
     private MapElementLayer mPinLayer;
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         });
         mMapView.addOnMapTappedListener((MapTappedEventArgs e) -> {
             if ((boolean) mButtonPoiTap.getTag()) {
-                Geolocation location = mMapView.getLocationFromOffset(e.position);
+                Geopoint location = mMapView.getLocationFromOffset(e.position);
                 if (location != null) {
                     addPin(location, "");
                 }
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void addPin(Geolocation location, String title) {
+    private void addPin(Geopoint location, String title) {
         MapIcon pushpin = new MapIcon();
         pushpin.setLocation(location);
         pushpin.setTitle(title);

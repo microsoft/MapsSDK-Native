@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.microsoft.maps.AltitudeReferenceSystem;
 import com.microsoft.maps.GeoboundingBox;
-import com.microsoft.maps.Geolocation;
+import com.microsoft.maps.Geopoint;
 import com.microsoft.maps.MapAnimationKind;
 import com.microsoft.maps.MapElementLayer;
 import com.microsoft.maps.MapIcon;
@@ -33,6 +33,7 @@ import com.microsoft.maps.MapView;
 import com.microsoft.maps.search.MapLocation;
 import com.microsoft.maps.search.MapLocationFinder;
 import com.microsoft.maps.search.MapLocationFinderResult;
+import com.microsoft.maps.search.MapLocationFinderStatus;
 import com.microsoft.maps.search.MapLocationOptions;
 
 import java.util.ArrayList;
@@ -41,8 +42,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Geolocation LOCATION_LAKE_WASHINGTON =
-            new Geolocation(47.609466, -122.265185);
+    private static final Geopoint LOCATION_LAKE_WASHINGTON =
+            new Geopoint(47.609466, -122.265185);
 
     private MapView mMapView;
     private MapElementLayer mPinLayer;
@@ -89,20 +90,20 @@ public class MainActivity extends AppCompatActivity {
         });
         mMapView.addOnMapTappedListener((MapTappedEventArgs e) -> {
             if ((boolean) mButtonPoiTap.getTag()) {
-                Geolocation location = mMapView.getLocationFromOffset(e.position);
+                Geopoint location = mMapView.getLocationFromOffset(e.position);
                 if (location != null) {
                     MapLocationFinder.findLocationsAt(
                         location,
                         null,
                         (MapLocationFinderResult result) -> {
-                            MapLocationFinder.Status status = result.getStatus();
+                            MapLocationFinderStatus status = result.getStatus();
 
-                            if (status == MapLocationFinder.Status.SUCCESS) {
+                            if (status == MapLocationFinderStatus.SUCCESS) {
 
                                 MapLocation resultLocation = result.getLocations().get(0);
-                                Geolocation pinLocation = new Geolocation(
-                                    location.getLatitude(),
-                                    location.getLongitude(),
+                                Geopoint pinLocation = new Geopoint(
+                                    location.getPosition().getLatitude(),
+                                    location.getPosition().getLongitude(),
                                     0);
                                 String pinTitle = String.format(
                                     Locale.ROOT,
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 addPin(pinLocation, pinTitle);
 
-                            } else if (status == MapLocationFinder.Status.EMPTY_RESPONSE) {
+                            } else if (status == MapLocationFinderStatus.EMPTY_RESPONSE) {
                                 Toast.makeText(MainActivity.this, "Unable to reverse geocode this location", Toast.LENGTH_LONG).show();
 
                             } else {
@@ -167,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void addPin(Geolocation location, String title) {
+    private void addPin(Geopoint location, String title) {
         MapIcon pushpin = new MapIcon();
         pushpin.setLocation(location);
         pushpin.setTitle(title);
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
-                    Geolocation referenceLocation = null;
+                    Geopoint referenceLocation = null;
                     if (checkReferenceLocation.isChecked()) {
                         referenceLocation = mMapView.getCenter();
                     }
@@ -214,15 +215,15 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     MapLocationFinder.findLocations(query, referenceLocation, referenceBoundingBox, options, (MapLocationFinderResult result) -> {
-                        MapLocationFinder.Status status = result.getStatus();
+                        MapLocationFinderStatus status = result.getStatus();
 
-                        if (status == MapLocationFinder.Status.SUCCESS) {
-                            List<Geolocation> points = new ArrayList<>();
+                        if (status == MapLocationFinderStatus.SUCCESS) {
+                            List<Geopoint> points = new ArrayList<>();
 
                             for (MapLocation mapLocation : result.getLocations()) {
-                                Geolocation pinLocation = new Geolocation(
-                                    mapLocation.getPoint().getLatitude(),
-                                    mapLocation.getPoint().getLongitude(),
+                                Geopoint pinLocation = new Geopoint(
+                                    mapLocation.getPoint().getPosition().getLatitude(),
+                                    mapLocation.getPoint().getPosition().getLongitude(),
                                     0,
                                     AltitudeReferenceSystem.TERRAIN);
                                 addPin(pinLocation, mapLocation.getDisplayName());
@@ -235,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
                                 mMapView.setScene(MapScene.createFromLocation(points.get(0)), MapAnimationKind.DEFAULT);
                             }
 
-                        } else if (status == MapLocationFinder.Status.EMPTY_RESPONSE) {
+                        } else if (status == MapLocationFinderStatus.EMPTY_RESPONSE) {
                             Toast.makeText(MainActivity.this, "No results were found", Toast.LENGTH_LONG).show();
 
                         } else {
