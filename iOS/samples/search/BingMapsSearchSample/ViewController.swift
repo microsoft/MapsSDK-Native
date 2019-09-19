@@ -45,13 +45,13 @@ class ViewController: UIViewController, UIPickerViewDelegate {
             pinImage = MSMapImage(svgImage: svgData)
         } catch {}
 
-        mapView.addUserDidTapHandler{ (point:CGPoint, geolocation:MSGeolocation?) -> Bool in
+        mapView.addUserDidTapHandler{ (point:CGPoint, location:MSGeolocation?) -> Bool in
             DispatchQueue.main.sync{
                 guard self.addOnTapSwitch.isOn else {
                     return false
                 }
 
-                MSMapLocationFinder.findLocations(at: geolocation!, with: nil, handleResultWith: { (result: MSMapLocationFinderResult) in
+                MSMapLocationFinder.findLocations(at: location!, with: nil, handleResultWith: { (result: MSMapLocationFinderResult) in
                     switch result.status {
                     case MSMapLocationFinderStatus.success:
                         if result.locations.isEmpty {
@@ -60,8 +60,8 @@ class ViewController: UIViewController, UIPickerViewDelegate {
                         }
                         let pushpin = MSMapIcon()
                         pushpin.location = MSGeolocation(
-                            latitude: geolocation!.latitude,
-                            longitude: geolocation!.longitude)
+                            latitude: location!.latitude,
+                            longitude: location!.longitude)
                         pushpin.title = result.locations[0].address.formattedAddress
                         if self.pinImage != nil {
                             pushpin.image = self.pinImage
