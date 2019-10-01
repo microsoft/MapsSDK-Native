@@ -33,7 +33,7 @@ Steps to reproduce the behavior:
 **Device and SDK information (please complete the following):**
  - OS version: [e.g. Android 8.1, iOS 12.2]
  - Architecture: [e.g. x86, arm64]
- - Bing Maps SDK version: [e.g. preview-1.0.1]
+ - Bing Maps SDK version: [e.g. v-1.0.0]
  - Language: <!-- If applicable -->
  - Region: <!-- If applicable -->
 
