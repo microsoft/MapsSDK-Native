@@ -10,7 +10,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.microsoft.maps.GeoboundingBox;
-import com.microsoft.maps.Geolocation;
+import com.microsoft.maps.Geopoint;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,7 +29,7 @@ class LocalSearch {
 
     static class Poi {
         String name;
-        Geolocation location;
+        Geopoint location;
     }
 
     interface Callback {
@@ -45,7 +45,7 @@ class LocalSearch {
 
         String boundsStr = String.format(Locale.ROOT,
             "%.6f,%.6f,%.6f,%.6f",
-            bounds.south, bounds.west, bounds.north, bounds.east);
+            bounds.getSouth(), bounds.getWest(), bounds.getNorth(), bounds.getEast());
 
         RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(new StringRequest(
@@ -80,7 +80,7 @@ class LocalSearch {
 
                 JSONObject pointJObj = resourceJObj.getJSONObject("point");
                 JSONArray coordinatesJArr = pointJObj.getJSONArray("coordinates");
-                poi.location = new Geolocation(
+                poi.location = new Geopoint(
                         coordinatesJArr.getDouble(0),
                         coordinatesJArr.getDouble(1));
 

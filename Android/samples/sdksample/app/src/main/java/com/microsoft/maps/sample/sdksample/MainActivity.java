@@ -3,6 +3,7 @@ package com.microsoft.maps.sample.sdksample;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.microsoft.maps.Geolocation;
+import com.microsoft.maps.Geopoint;
 import com.microsoft.maps.MapAnimationKind;
 import com.microsoft.maps.MapElementLayer;
 import com.microsoft.maps.MapIcon;
@@ -33,7 +34,6 @@ import com.microsoft.maps.MapStyleSheet;
 import com.microsoft.maps.MapStyleSheets;
 import com.microsoft.maps.MapTappedEventArgs;
 import com.microsoft.maps.MapView;
-import com.microsoft.maps.Optional;
 
 import java.util.List;
 
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
     };
     private static final int POSITION_CUSTOM = MAP_STYLES.length;
 
-    private static final Geolocation LOCATION_LAKE_WASHINGTON =
-            new Geolocation(47.609466, -122.265185);
+    private static final Geopoint LOCATION_LAKE_WASHINGTON =
+            new Geopoint(47.609466, -122.265185);
 
     private MapView mMapView;
     private MapElementLayer mPinLayer;
@@ -123,9 +123,9 @@ public class MainActivity extends AppCompatActivity {
         });
         mMapView.addOnMapTappedListener((MapTappedEventArgs e) -> {
             if ((boolean) mButtonPoiTap.getTag()) {
-                Optional<Geolocation> location = mMapView.getLocationFromOffset(e.position);
-                if (location.isPresent()) {
-                    addPin(location.get(), "");
+                Geopoint location = mMapView.getLocationFromOffset(e.position);
+                if (location != null) {
+                    addPin(location, "");
                 }
             }
             return false;
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (mMapView != null) {
-            mMapView.resume();
+            mMapView.onResume();
         }
     }
 
@@ -155,15 +155,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if (mMapView != null) {
-            mMapView.suspend();
+            mMapView.onPause();
         }
     }
 
-    private void addPin(Geolocation location, String title) {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mMapView != null) {
+            mMapView.onDestroy();
+        }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        if (mMapView != null) {
+            mMapView.onLowMemory();
+        }
+    }
+
+    private void addPin(Geopoint location, String title) {
         MapIcon pushpin = new MapIcon();
         pushpin.setLocation(location);
         pushpin.setTitle(title);
         pushpin.setImage(mPinImage);
+        pushpin.setNormalizedAnchorPoint(new PointF(0.5f, 1f));
         mPinLayer.getElements().add(pushpin);
     }
 
@@ -181,9 +198,9 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
             .setView(input)
             .setPositiveButton("Set", (DialogInterface dialog, int which) -> {
-                Optional<MapStyleSheet> style = MapStyleSheet.fromJson(input.getText().toString());
-                if (style.isPresent()) {
-                    mMapView.setMapStyleSheet(style.get());
+                MapStyleSheet style = MapStyleSheet.fromJson(input.getText().toString());
+                if (style != null) {
+                    mMapView.setMapStyleSheet(style);
                 } else {
                     mStyleSpinner.setSelection(mStyleSpinnerPosition);
                     Toast.makeText(MainActivity.this,"Custom style JSON is invalid", Toast.LENGTH_LONG).show();

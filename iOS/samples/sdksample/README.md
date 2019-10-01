@@ -47,7 +47,6 @@ Run the command `pod init` to create the `Podfile` which is used to store your p
 
 Open the newly created `Podfile` and specify the following:
 >```
-> # Uncomment the next line to define a global platform for your project
 > source 'https://github.com/CocoaPods/Specs.git'
 >
 > platform :ios, '9.0'
@@ -57,8 +56,7 @@ Open the newly created `Podfile` and specify the following:
 >   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
 >   use_frameworks!
 >
->   # Pods for SampleApp
->   pod 'MicrosoftMapsSDK', '~> 0.2.0'
+>   pod 'MicrosoftMapsSDK', '~> 1.0.0'
 > end
 >```
 
@@ -104,7 +102,7 @@ Let's go through a common scenario to set map scene to a specific location on st
 First, declare the location. Say, we want to show Seattle and Bellevue and choose Lake Washington in between:
 
 >```swift
-> let LOCATION_LAKE_WASHINGTON = MSGeolocation(latitude: 47.609466, longitude: -122.265185)
+> let LOCATION_LAKE_WASHINGTON = MSGeopoint(latitude: 47.609466, longitude: -122.265185)
 >```
 
 Then override your ViewController's `viewDidLoad` method with a `setScene` call:
@@ -138,7 +136,7 @@ Next step, initialize and add it to map view's layers in your `onCreate` method:
 Use the following snippet to add pins:
 
 >```swift
-> let location = MSGeolocation(...)  // your pin lat-long coordinates
+> let location = MSGeopoint(...)     // your pin lat-long coordinates
 > let pinBitmap = MSMapImage(...)    // your pin graphic
 >
 > let pushpin = MSMapIcon()
@@ -179,7 +177,7 @@ Bing Maps Native Control also supports custom styling via JSON, using the same f
 
 >```swift
 > var styleSheetFromJson:MSMapStyleSheet!
-> let result = MSMapStyleSheets.try(toParseJson: yourCustomStyleJsonString, into:&styleSheetFromJson)
+> let result = MSMapStyleSheet.try(toParseJson: yourCustomStyleJsonString, into:&styleSheetFromJson)
 > if (result)
 > {
 >     mapView.setStyleSheet(styleSheetFromJson)

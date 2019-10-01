@@ -6,7 +6,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var mapStyleStrings = ["RoadLight","RoadDark", "RoadCanvasLight", "Aerial", "AerialWithOverlay", "RoadHightContrastLight", "RoadHighContrastDark", "Custom"]
     var mapStyles = [MSMapStyleSheets.roadLight(),MSMapStyleSheets.roadDark(), MSMapStyleSheets.roadCanvasLight(), MSMapStyleSheets.aerial(), MSMapStyleSheets.aerialWithOverlay(), MSMapStyleSheets.roadHighContrastLight(), MSMapStyleSheets.roadHighContrastDark()]
 
-    let LOCATION_LAKE_WASHINGTON = MSGeolocation(latitude: 47.609466, longitude: -122.265185)
+    let LOCATION_LAKE_WASHINGTON = MSGeopoint(latitude: 47.609466, longitude: -122.265185)
     let customMapStyleString = """
         {
             "version": "1.0",
@@ -87,23 +87,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         } catch{
         }
 
-        mapView.addUserDidTapHandler{ (point:CGPoint, location:MSGeolocation?) -> Bool in
-            DispatchQueue.main.sync{
-                if self.addOnTapSwitch.isOn {
-                    var location:MSGeolocation!
-                    if self.mapView.try(toConvertOffset: point, intoLocation: &location) {
-                        let pushpin = MSMapIcon()
-                        pushpin.location = location
-                        if self.pinImage != nil {
-                            pushpin.image = self.pinImage
-                        }
-                        self.pinLayer.elements.add(pushpin)
-
-                        return true
-                    }
+        mapView.addUserDidTapHandler{ (point:CGPoint, location:MSGeopoint?) -> Bool in
+            if self.addOnTapSwitch.isOn {
+                let pushpin = MSMapIcon()
+                pushpin.location = location!
+                if self.pinImage != nil {
+                    pushpin.image = self.pinImage
+                    pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
                 }
-                return false
+                self.pinLayer.elements.add(pushpin)
+
+                return true
             }
+            return false
         }
 
         setupDemoMenu()
@@ -130,6 +126,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         pushpin.title = result.name as String
                         if self.pinImage != nil {
                             pushpin.image = self.pinImage
+                            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
                         }
                         self.pinLayer.elements.add(pushpin)
                     }

@@ -24,7 +24,7 @@ For geocoding requests, use `MSMapLocationFinder` class.
 Say, we want to geocode Bellevue, Washington. Since there's multiple Bellevues, let's provide a reference point that we know is in Bellevue. Since we're interested in the first result, let's also ask the service to only return one.
 
 >```swift
-> let referencePoint = MSGeolocation(latitude: 47.612498, longitude: -122.204200)
+> let referencePoint = MSGeopoint(latitude: 47.612498, longitude: -122.204200)
 >
 > let options = MSMapLocationOptions()
 > options.setMaxResults(1)

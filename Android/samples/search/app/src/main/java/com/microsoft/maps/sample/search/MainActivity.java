@@ -3,6 +3,7 @@ package com.microsoft.maps.sample.search;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 
 import com.microsoft.maps.AltitudeReferenceSystem;
 import com.microsoft.maps.GeoboundingBox;
-import com.microsoft.maps.Geolocation;
+import com.microsoft.maps.Geopoint;
 import com.microsoft.maps.MapAnimationKind;
 import com.microsoft.maps.MapElementLayer;
 import com.microsoft.maps.MapIcon;
@@ -29,7 +30,6 @@ import com.microsoft.maps.MapScene;
 import com.microsoft.maps.MapServices;
 import com.microsoft.maps.MapTappedEventArgs;
 import com.microsoft.maps.MapView;
-import com.microsoft.maps.Optional;
 import com.microsoft.maps.search.MapLocation;
 import com.microsoft.maps.search.MapLocationFinder;
 import com.microsoft.maps.search.MapLocationFinderResult;
@@ -42,8 +42,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Geolocation LOCATION_LAKE_WASHINGTON =
-            new Geolocation(47.609466, -122.265185);
+    private static final Geopoint LOCATION_LAKE_WASHINGTON =
+            new Geopoint(47.609466, -122.265185);
 
     private MapView mMapView;
     private MapElementLayer mPinLayer;
@@ -90,10 +90,10 @@ public class MainActivity extends AppCompatActivity {
         });
         mMapView.addOnMapTappedListener((MapTappedEventArgs e) -> {
             if ((boolean) mButtonPoiTap.getTag()) {
-                Optional<Geolocation> location = mMapView.getLocationFromOffset(e.position);
-                if (location.isPresent()) {
+                Geopoint location = mMapView.getLocationFromOffset(e.position);
+                if (location != null) {
                     MapLocationFinder.findLocationsAt(
-                        location.get(),
+                        location,
                         null,
                         (MapLocationFinderResult result) -> {
                             MapLocationFinderStatus status = result.getStatus();
@@ -101,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
                             if (status == MapLocationFinderStatus.SUCCESS) {
 
                                 MapLocation resultLocation = result.getLocations().get(0);
-                                Geolocation pinLocation = new Geolocation(
-                                    location.get().getLatitude(),
-                                    location.get().getLongitude(),
+                                Geopoint pinLocation = new Geopoint(
+                                    location.getPosition().getLatitude(),
+                                    location.getPosition().getLongitude(),
                                     0);
                                 String pinTitle = String.format(
                                     Locale.ROOT,
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (mMapView != null) {
-            mMapView.resume();
+            mMapView.onResume();
         }
     }
 
@@ -148,15 +148,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if (mMapView != null) {
-            mMapView.suspend();
+            mMapView.onPause();
         }
     }
 
-    private void addPin(Geolocation location, String title) {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mMapView != null) {
+            mMapView.onDestroy();
+        }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        if (mMapView != null) {
+            mMapView.onLowMemory();
+        }
+    }
+
+    private void addPin(Geopoint location, String title) {
         MapIcon pushpin = new MapIcon();
         pushpin.setLocation(location);
         pushpin.setTitle(title);
         pushpin.setImage(mPinImage);
+        pushpin.setNormalizedAnchorPoint(new PointF(0.5f, 1f));
         mPinLayer.getElements().add(pushpin);
     }
 
@@ -180,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
-                    Geolocation referenceLocation = null;
+                    Geopoint referenceLocation = null;
                     if (checkReferenceLocation.isChecked()) {
                         referenceLocation = mMapView.getCenter();
                     }
@@ -201,18 +218,23 @@ public class MainActivity extends AppCompatActivity {
                         MapLocationFinderStatus status = result.getStatus();
 
                         if (status == MapLocationFinderStatus.SUCCESS) {
-                            List<Geolocation> points = new ArrayList<>();
+                            List<Geopoint> points = new ArrayList<>();
 
                             for (MapLocation mapLocation : result.getLocations()) {
-                                Geolocation pinLocation = new Geolocation(
-                                    mapLocation.getPoint().getLatitude(),
-                                    mapLocation.getPoint().getLongitude(),
+                                Geopoint pinLocation = new Geopoint(
+                                    mapLocation.getPoint().getPosition().getLatitude(),
+                                    mapLocation.getPoint().getPosition().getLongitude(),
                                     0,
                                     AltitudeReferenceSystem.TERRAIN);
                                 addPin(pinLocation, mapLocation.getDisplayName());
                                 points.add(mapLocation.getPoint());
                             }
-                            mMapView.setScene(MapScene.createFromLocations(points), MapAnimationKind.DEFAULT);
+
+                            if (points.size() > 1) {
+                                mMapView.setScene(MapScene.createFromLocations(points), MapAnimationKind.DEFAULT);
+                            } else if (points.size() == 1) {
+                                mMapView.setScene(MapScene.createFromLocation(points.get(0)), MapAnimationKind.DEFAULT);
+                            }
 
                         } else if (status == MapLocationFinderStatus.EMPTY_RESPONSE) {
                             Toast.makeText(MainActivity.this, "No results were found", Toast.LENGTH_LONG).show();

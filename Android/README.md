@@ -1,4 +1,4 @@
-# Bing Maps SDK for Android (preview release)
+# Bing Maps SDK for Android
 
 Here you can find sample apps that showcase Bing Maps SDK features on Android.
 You will need an Android app development IDE and an Android device or emulator (Android 4.4 or later) to use these features.
