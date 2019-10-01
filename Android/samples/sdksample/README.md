@@ -67,7 +67,7 @@ Then, before `dependencies` block, insert following snippet at top level to add 
 And finally, inside `dependencies` block, add the following line:
 
 >```
-> implementation 'com.microsoft.maps:maps-sdk:0.2.0'
+> implementation 'com.microsoft.maps:maps-sdk:1.0.0'
 >```
 
 ## Adding a map view to your activity
@@ -103,20 +103,58 @@ Place following code in your activity's `onCreate` method, after `setContentView
 > ((FrameLayout)findViewById(R.id.map_view)).addView(mMapView);
 >```
 
-Override `onResume` and `onPause` with calls to map view's `resume` and `suspend`:
+Override `onCreate`, `onStart`, `onResume`, `onPause`, `onSaveInstanceState`,  `onStop`, `onDestroy`, and `onLowMemory` with calls to the respective MapView methods:
 
 >```java
 > @Override
+> public void onCreate(Bundle savedInstanceState)
+> {
+>     super.onCreate(savedInstanceState);
+>     mMapView.onCreate(savedInstanceState);
+> }
+>
+> @Override
+> protected void onStart() {
+>     super.onStart();
+>     mMapView.onStart();
+> }
+>
+> @Override
 > protected void onResume() {
 >     super.onResume();
->     mMapView.resume();
+>     mMapView.onResume();
 > }
 >
 > @Override
 > protected void onPause() {
 >     super.onPause();
->     mMapView.suspend();
+>     mMapView.onPause();
 > }
+>
+> @Override
+> protected void onSaveInstanceState(Bundle outState) {
+>     super.onSaveInstanceState(outState);
+>     mMapView.onSaveInstanceState(outState);
+> }
+>
+> @Override
+> protected void onStop() {
+>     super.onStop();
+>     mMapView.onStop();
+> }
+>
+> @Override
+> protected void onDestroy() {
+>     super.onDestroy();
+>     mMapView.onDestroy();
+> }
+>
+> @Override
+> protected void onLowMemory() {
+>     super.onLowMemory();
+>     mMapView.onLowMemory();
+> }
+>
 >```
 
 Ready to run!
@@ -130,7 +168,7 @@ Let's go through a common scenario to set map scene to a specific location on st
 First, add following imports:
 
 >```java
-> import com.microsoft.maps.Geolocation;
+> import com.microsoft.maps.Geopoint;
 > import com.microsoft.maps.MapAnimationKind;
 > import com.microsoft.maps.MapScene;
 >```
@@ -138,7 +176,7 @@ First, add following imports:
 Next step is declaring the location. Say, we want to show Seattle and Bellevue and choose Lake Washington in between:
 
 >```java
-> private static final Geolocation LAKE_WASHINGTON = new Geolocation(47.609466, -122.265185);
+> private static final Geopoint LAKE_WASHINGTON = new Geopoint(47.609466, -122.265185);
 >```
 
 Then override your activity's `onStart` method with a `setScene` call:
@@ -147,6 +185,8 @@ Then override your activity's `onStart` method with a `setScene` call:
 > @Override
 > protected void onStart() {
 >     super.onStart();
+>     mMapView.onStart();
+>
 >     mMapView.setScene(
 >         MapScene.createFromLocationAndZoomLevel(LAKE_WASHINGTON, 10),
 >         MapAnimationKind.NONE);
@@ -160,7 +200,7 @@ You can attach pins to locations on the map using custom element layer populated
 First, you'll need these imports:
 
 >```java
-> import com.microsoft.maps.Geolocation;
+> import com.microsoft.maps.Geopoint;
 > import com.microsoft.maps.MapElementLayer;
 > import com.microsoft.maps.MapIcon;
 > import com.microsoft.maps.MapImage;
@@ -182,7 +222,7 @@ Next step, initialize and add it to map view's layers in your `onCreate` method:
 Use the following snippet to add pins:
 
 >```java
-> Geolocation location = ...  // your pin lat-long coordinates
+> Geopoint location = ...     // your pin lat-long coordinates
 > String title = ...          // title to be shown next to the pin
 > Bitmap pinBitmap = ...      // your pin graphic
 >
@@ -227,12 +267,11 @@ Bing Maps Native Control also supports custom styling via JSON, using the same f
 
 >```java
 > import com.microsoft.maps.MapStyleSheet;
-> import com.microsoft.maps.Optional;
 >
 > ...
 >
-> Optional<MapStyleSheet> style = MapStyleSheet.fromJson(yourCustomStyleJsonString);
-> if (style.isPresent()) {
+> MapStyleSheet style = MapStyleSheet.fromJson(yourCustomStyleJsonString);
+> if (style != null) {
 >     mMapView.setMapStyleSheet(style.get());
 > } else {
 >     // Custom style JSON is invalid

@@ -104,7 +104,7 @@ Let's go through a common scenario to set map scene to a specific location on st
 First, declare the location. Say, we want to show Seattle and Bellevue and choose Lake Washington in between:
 
 >```swift
-> let LOCATION_LAKE_WASHINGTON = MSGeolocation(latitude: 47.609466, longitude: -122.265185)
+> let LOCATION_LAKE_WASHINGTON = MSGeopoint(latitude: 47.609466, longitude: -122.265185)
 >```
 
 Then override your ViewController's `viewDidLoad` method with a `setScene` call:
@@ -138,7 +138,7 @@ Next step, initialize and add it to map view's layers in your `onCreate` method:
 Use the following snippet to add pins:
 
 >```swift
-> let location = MSGeolocation(...)  // your pin lat-long coordinates
+> let location = MSGeopoint(...)     // your pin lat-long coordinates
 > let pinBitmap = MSMapImage(...)    // your pin graphic
 >
 > let pushpin = MSMapIcon()
@@ -179,7 +179,7 @@ Bing Maps Native Control also supports custom styling via JSON, using the same f
 
 >```swift
 > var styleSheetFromJson:MSMapStyleSheet!
-> let result = MSMapStyleSheets.try(toParseJson: yourCustomStyleJsonString, into:&styleSheetFromJson)
+> let result = MSMapStyleSheet.try(toParseJson: yourCustomStyleJsonString, into:&styleSheetFromJson)
 > if (result)
 > {
 >     mapView.setStyleSheet(styleSheetFromJson)

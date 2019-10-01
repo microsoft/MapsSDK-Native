@@ -1,4 +1,4 @@
-# Bing Maps SDK for iOS (preview release)
+# Bing Maps SDK for iOS
 
 Here you can find sample apps that showcase Bing Maps SDK features on iOS.
 You will need an iOS app development IDE and an iOS device or emulator to use these features.

@@ -2,9 +2,6 @@
 
 Welcome to the Bing Maps SDK for Android and iOS!
 
-> The SDK for Android and iOS is currently available as a developer preview.  Although we encourage you to try out the SDK in your own
-prototype code now, we caution the use in production code at this time.
->
 > Feature requests and bug reports are very much welcome at the [issues page](https://github.com/Microsoft/MapsSDK-Native/issues).
 Your insights and scenarios are critically important to us.
 
