@@ -93,6 +93,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 pushpin.location = location!
                 if self.pinImage != nil {
                     pushpin.image = self.pinImage
+                    pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
                 }
                 self.pinLayer.elements.add(pushpin)
 
@@ -125,6 +126,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         pushpin.title = result.name as String
                         if self.pinImage != nil {
                             pushpin.image = self.pinImage
+                            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
                         }
                         self.pinLayer.elements.add(pushpin)
                     }
