@@ -18,6 +18,10 @@ bin/
 gen/
 out/
 
+# Buildship files
+.project
+.settings/
+
 # Gradle files
 .gradle/
 build/
