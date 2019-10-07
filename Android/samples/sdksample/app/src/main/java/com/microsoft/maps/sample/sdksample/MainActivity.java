@@ -67,8 +67,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mMapView = new MapView(this, MapRenderMode.VECTOR);
+        mMapView.onCreate(savedInstanceState);
         mMapView.setCredentialsKey(BuildConfig.CREDENTIALS_KEY);
         ((FrameLayout)findViewById(R.id.map_view)).addView(mMapView);
+        mMapView.setScene(
+                MapScene.createFromLocationAndZoomLevel(LOCATION_LAKE_WASHINGTON, 10),
+                MapAnimationKind.NONE);
 
         mPinLayer = new MapElementLayer();
         mMapView.getLayers().add(mPinLayer);
@@ -138,9 +142,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mMapView.setScene(
-            MapScene.createFromLocationAndZoomLevel(LOCATION_LAKE_WASHINGTON, 10),
-            MapAnimationKind.NONE);
+        if (mMapView != null) {
+            mMapView.onStart();
+        }
     }
 
     @Override
@@ -156,6 +160,22 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         if (mMapView != null) {
             mMapView.onPause();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mMapView != null) {
+            mMapView.onSaveInstanceState(outState);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mMapView != null) {
+            mMapView.onStop();
         }
     }
 
