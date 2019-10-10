@@ -21,9 +21,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dyx-RU-VK4" customClass="MSMapView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bY-Oa-hkW">
-                                        <rect key="frame" x="304" y="607" width="50" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bY-Oa-hkW">
+                                        <rect key="frame" x="293" y="585" width="52" height="52"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="CWi-68-P5L"/>
+                                            <constraint firstAttribute="width" constant="52" id="T2h-UY-Ctg"/>
+                                        </constraints>
                                         <state key="normal" title="Demo">
                                             <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                         </state>
@@ -114,6 +118,7 @@ FkFkZCBvbiB0YXA
                     </view>
                     <connections>
                         <outlet property="addOnTapSwitch" destination="Gqk-Mp-hmI" id="Zwh-Dy-Y3J"/>
+                        <outlet property="demoButton" destination="1bY-Oa-hkW" id="ygT-PI-iwi"/>
                         <outlet property="demoMenu" destination="6nK-Iv-xRv" id="hSw-Pe-yeA"/>
                         <outlet property="mapView" destination="Dyx-RU-VK4" id="N3I-7g-oZE"/>
                     </connections>
