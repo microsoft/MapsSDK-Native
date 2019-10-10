@@ -8,30 +8,30 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     let LOCATION_LAKE_WASHINGTON = MSGeopoint(latitude: 47.609466, longitude: -122.265185)
     let customMapStyleString = """
-        {
-            "version": "1.0",
-            "settings": {
-                "landColor": "#FFFFFF",
-                "spaceColor": "#000000"
+    {
+        "version": "1.0",
+        "settings": {
+            "landColor": "#FFFFFF",
+            "spaceColor": "#000000"
+        },
+        "elements": {
+            "mapElement": {
+                "labelColor": "#000000",
+                "labelOutlineColor": "#FFFFFF"
             },
-            "elements": {
-                "mapElement": {
-                    "labelColor": "#000000",
-                    "labelOutlineColor": "#FFFFFF"
-                },
-                "water": {
-                    "fillColor": "#DDDDDD"
-                },
-                "area": {
-                    "fillColor": "#EEEEEE"
-                },
-                "political": {
-                    "borderStrokeColor": "#CCCCCC",
-                    "borderOutlineColor": "#00000000"
-                }
+            "water": {
+                "fillColor": "#DDDDDD"
+            },
+            "area": {
+                "fillColor": "#EEEEEE"
+            },
+            "political": {
+                "borderStrokeColor": "#CCCCCC",
+                "borderOutlineColor": "#00000000"
             }
         }
-        """
+    }
+    """
 
     var pinLayer:MSMapElementLayer!
     var pinImage:MSMapImage!
