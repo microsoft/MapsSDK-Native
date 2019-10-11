@@ -31,7 +31,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
             }
         }
-        """
+    """
 
     var pinLayer:MSMapElementLayer!
     var pinImage:MSMapImage!
@@ -40,6 +40,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     let jsonInputController = UIAlertController(title:"", message:"Enter style JSON", preferredStyle: .alert)
 
     @IBOutlet weak var mapView: MSMapView!
+    @IBOutlet weak var demoButton: UIButton!
     @IBOutlet weak var demoMenu: UIView!
     @IBOutlet weak var mapStylesPickerView: UIPickerView!
     @IBOutlet weak var projectionSeg: UISegmentedControl!
@@ -72,6 +73,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Make demo button round.
+        demoButton.layer.cornerRadius = demoButton.frame.size.width / 2.0;
 
         // Do any additional setup after loading the view, typically from a nib.
         mapView.credentialsKey = Bundle.main.infoDictionary?["CREDENTIALS_KEY"] as! String

@@ -12,6 +12,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
     let errorMessageController = UIAlertController(title:"", message:"", preferredStyle: .alert)
 
     @IBOutlet weak var mapView: MSMapView!
+    @IBOutlet weak var demoButton: UIButton!
     @IBOutlet weak var demoMenu: UIView!
     @IBOutlet weak var addOnTapSwitch: UISwitch!
 
@@ -29,6 +30,9 @@ class ViewController: UIViewController, UIPickerViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Make demo button round.
+        demoButton.layer.cornerRadius = demoButton.frame.size.width / 2.0;
 
         // Do any additional setup after loading the view, typically from a nib.
         mapView.credentialsKey = CREDENTIALS_KEY
