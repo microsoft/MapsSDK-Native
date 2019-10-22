@@ -3,8 +3,8 @@ import MicrosoftMaps
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    var mapStyleStrings = ["RoadLight","RoadDark", "RoadCanvasLight", "Aerial", "AerialWithOverlay", "RoadHightContrastLight", "RoadHighContrastDark", "Custom"]
-    var mapStyles = [MSMapStyleSheets.roadLight(),MSMapStyleSheets.roadDark(), MSMapStyleSheets.roadCanvasLight(), MSMapStyleSheets.aerial(), MSMapStyleSheets.aerialWithOverlay(), MSMapStyleSheets.roadHighContrastLight(), MSMapStyleSheets.roadHighContrastDark()]
+    var mapStyleStrings = ["RoadLight", "RoadDark", "RoadCanvasLight", "Aerial", "AerialWithOverlay", "RoadHightContrastLight", "RoadHighContrastDark", "Custom"]
+    var mapStyles = [MSMapStyleSheets.roadLight(), MSMapStyleSheets.roadDark(), MSMapStyleSheets.roadCanvasLight(), MSMapStyleSheets.aerial(), MSMapStyleSheets.aerialWithOverlay(), MSMapStyleSheets.roadHighContrastLight(), MSMapStyleSheets.roadHighContrastDark()]
 
     let LOCATION_LAKE_WASHINGTON = MSGeopoint(latitude: 47.609466, longitude: -122.265185)
     let customMapStyleString = """
@@ -79,8 +79,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         // Do any additional setup after loading the view, typically from a nib.
         mapView.credentialsKey = Bundle.main.infoDictionary?["CREDENTIALS_KEY"] as! String
+
+        updateMapViewColorScheme()
+
         let scene = MSMapScene(location: LOCATION_LAKE_WASHINGTON, zoomLevel: 10 )
         self.mapView.setScene(scene, with: .none)
+
         pinLayer = MSMapElementLayer()
         mapView.layers.add(pinLayer)
 
@@ -88,7 +92,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         do {
             let svgData = try Data(contentsOf: URL(fileURLWithPath: svgImagePath!))
             pinImage = MSMapImage(svgImage: svgData)
-        } catch{
+        } catch {
         }
 
         mapView.addUserDidTapHandler{ (point:CGPoint, location:MSGeopoint?) -> Bool in
@@ -107,6 +111,18 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
 
         setupDemoMenu()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if (traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle) {
+            self.updateMapViewColorScheme()
+        }
+    }
+
+    func updateMapViewColorScheme() {
+        mapView.setStyleSheet(traitCollection.userInterfaceStyle == .dark ? MSMapStyleSheets.roadDark() : MSMapStyleSheets.roadLight())
     }
 
     func setupDemoMenu() {
