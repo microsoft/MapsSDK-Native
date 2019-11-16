@@ -1,5 +1,22 @@
 # Bing Maps SDK for iOS
 
+Version 1.0.1 - November 2019
+=============================
+## Improvements
+- Improves rendering performance.
+- Improves map toolbar's appearance and support for dark and light modes.
+- Adds new shape `MSGeocircle`.
+- Adds support for custom anchor point on flyout.
+- Adds support for custom styling properties on map elements.
+- Adds support for polygons of various shapes.
+- Adds support for view padding.
+- Adds support to zoom to a desired level of detail.
+- Reduces flashing of map icons when the view changes.
+## Resolved Issues
+- Fixes management of resources upon suspend and resume.
+- Fixes memory leaks.
+- Fixes other intermittent crashes.
+
 Version 1.0.0 - September 2019
 ==============================
 ## Breaking changes
