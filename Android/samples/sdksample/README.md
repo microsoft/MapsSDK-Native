@@ -28,7 +28,7 @@ Ready to run!
 
     When it comes to language, this tutorial is in **Java**, though feel free to use Kotlin if that's your preference.
 
-    Set **API 16** as your Minimum API level.
+    Set **API 19** or higher as your Minimum API level.
 
     Press **Finish** when you're ready.
 
@@ -67,7 +67,7 @@ Then, before `dependencies` block, insert following snippet at top level to add 
 And finally, inside `dependencies` block, add the following line:
 
 >```
-> implementation 'com.microsoft.maps:maps-sdk:1.0.0'
+> implementation 'com.microsoft.maps:maps-sdk:1.0.1'
 >```
 
 ## Adding a map view to your activity
