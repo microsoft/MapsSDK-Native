@@ -74,13 +74,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        updateMapViewColorScheme()
+
         // Make demo button round.
         demoButton.layer.cornerRadius = demoButton.frame.size.width / 2.0;
 
         // Do any additional setup after loading the view, typically from a nib.
         mapView.credentialsKey = Bundle.main.infoDictionary?["CREDENTIALS_KEY"] as! String
-
-        updateMapViewColorScheme()
 
         let scene = MSMapScene(location: LOCATION_LAKE_WASHINGTON, zoomLevel: 10 )
         self.mapView.setScene(scene, with: .none)
@@ -116,13 +116,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        if (traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle) {
-            self.updateMapViewColorScheme()
+        if (self.traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle) {
+            updateMapViewColorScheme()
         }
     }
 
     func updateMapViewColorScheme() {
-        mapView.setStyleSheet(traitCollection.userInterfaceStyle == .dark ? MSMapStyleSheets.roadDark() : MSMapStyleSheets.roadLight())
+        mapView.setStyleSheet(self.traitCollection.userInterfaceStyle == .dark ?
+            MSMapStyleSheets.roadDark() :
+            MSMapStyleSheets.roadLight())
     }
 
     func setupDemoMenu() {
