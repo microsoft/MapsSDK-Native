@@ -74,8 +74,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        updateMapViewColorScheme()
-
         // Make demo button round.
         demoButton.layer.cornerRadius = demoButton.frame.size.width / 2.0;
 
@@ -111,6 +109,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
 
         setupDemoMenu()
+        updateMapViewColorScheme()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -122,9 +121,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func updateMapViewColorScheme() {
-        mapView.setStyleSheet(self.traitCollection.userInterfaceStyle == .dark ?
-            MSMapStyleSheets.roadDark() :
-            MSMapStyleSheets.roadLight())
+        let index = mapStyleStrings.firstIndex(of:
+            self.traitCollection.userInterfaceStyle == .dark ?
+                "RoadDark" :
+                "RoadLight")!
+        mapView.setStyleSheet(mapStyles[index])
+        mapStylesPickerView.selectRow(index, inComponent: 0, animated: true)
     }
 
     func setupDemoMenu() {
