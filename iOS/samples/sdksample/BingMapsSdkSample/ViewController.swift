@@ -3,9 +3,11 @@ import MicrosoftMaps
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    var mapStyleStrings = ["RoadLight", "RoadDark", "RoadCanvasLight", "Aerial", "AerialWithOverlay", "RoadHightContrastLight", "RoadHighContrastDark", "Custom"]
-    var mapStyles = [MSMapStyleSheets.roadLight(), MSMapStyleSheets.roadDark(), MSMapStyleSheets.roadCanvasLight(), MSMapStyleSheets.aerial(), MSMapStyleSheets.aerialWithOverlay(), MSMapStyleSheets.roadHighContrastLight(), MSMapStyleSheets.roadHighContrastDark()]
-
+    let mapStyleCounterparts = [
+        "RoadLight": "RoadDark",
+        "RoadDark": "RoadLight",
+        "RoadHighContrastLight": "RoadHighContrastDark",
+        "RoadHighContrastDark": "RoadHighContrastLight"]
     let LOCATION_LAKE_WASHINGTON = MSGeopoint(latitude: 47.609466, longitude: -122.265185)
     let customMapStyleString = """
         {
@@ -35,6 +37,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     var pinLayer:MSMapElementLayer!
     var pinImage:MSMapImage!
+    var currentStyle: MapStyle!
     let searchStringController = UIAlertController(title:"", message:"Enter a search string", preferredStyle:.alert)
     let errorMessageController = UIAlertController(title:"", message:"", preferredStyle: .alert)
     let jsonInputController = UIAlertController(title:"", message:"Enter style JSON", preferredStyle: .alert)
@@ -109,7 +112,17 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
 
         setupDemoMenu()
+
+        currentStyle = MapStyle.roadLight
         updateMapViewColorScheme()
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if #available(iOS 13.0, *) {
+            return currentStyle.colorScheme == .dark ? .lightContent : .darkContent
+        } else {
+            return .default
+        }
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -120,13 +133,35 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
 
+    func updateMapStyle() {
+        mapView.setStyleSheet(currentStyle.styleSheet)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+
     func updateMapViewColorScheme() {
-        let index = mapStyleStrings.firstIndex(of:
-            self.traitCollection.userInterfaceStyle == .dark ?
-                "RoadDark" :
-                "RoadLight")!
-        mapView.setStyleSheet(mapStyles[index])
-        mapStylesPickerView.selectRow(index, inComponent: 0, animated: true)
+        if (self.traitCollection.userInterfaceStyle == currentStyle.colorScheme) {
+            // No need to update, color scheme is already fitting.
+            return
+        }
+        if (currentStyle.colorScheme == .unspecified) {
+            // Custom style, don't know how to update.
+            return
+        }
+
+        let row = mapStylesPickerView.selectedRow(inComponent: 0)
+        guard let index = mapStyleCounterparts.index(forKey: MapStyle.all[row].name) else {
+            // Current style doesn't have a light/dark counterpart.
+            return
+        }
+
+        let newIndex = MapStyle.all.firstIndex { (style: MapStyle) -> Bool in
+            style.name == mapStyleCounterparts[index].value
+        }!
+        currentStyle = MapStyle.all[newIndex]
+        updateMapStyle()
+
+        // Update the UI style picker.
+        mapStylesPickerView.selectRow(newIndex, inComponent: 0, animated: true)
     }
 
     func setupDemoMenu() {
@@ -135,10 +170,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         searchStringController.addAction(UIAlertAction(title: "Search", style:.default, handler:{_ in
             let searchKeyword = self.searchStringController.textFields![0].text
-            // clear the text
             self.searchStringController.textFields![0].text = ""
             // do local search with the specified keyword
-            LocalSearch.sendRequest(queryOptional: searchKeyword, bounds: self.mapView.mapBounds, _completion:  {(results) in
+            LocalSearch.sendRequest(queryOptional: searchKeyword, bounds: self.mapView.mapBounds, _completion: {(results) in
                 if results == nil || results!.isEmpty {
                     self.errorMessageController.message = "No search result found"
                     self.present(self.errorMessageController, animated:true)
@@ -158,7 +192,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             })
         }))
         searchStringController.addAction(UIAlertAction(title:"Cancel", style:.default, handler:{_ in
-            // clear the text
             self.searchStringController.textFields![0].text = ""
         }))
 
@@ -169,20 +202,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         jsonInputController.addAction(UIAlertAction(title: "Set", style:.default, handler:{_ in
             let customMapStyleString = self.jsonInputController.textFields![0].text
-            // resets the text
+
+            // Reset the text to default custom JSON.
             self.jsonInputController.textFields![0].text = self.customMapStyleString
-            // do local search with the specified keyword
+
             var styleSheetFromJson:MSMapStyleSheet? = nil
             if (customMapStyleString != nil && MSMapStyleSheet.try(toParseJson: customMapStyleString!, into:&styleSheetFromJson)) {
-                self.mapView.setStyleSheet(styleSheetFromJson!)
-            }
-            else{
+                self.currentStyle = MapStyle(name: "Custom", styleSheet: styleSheetFromJson!, colorScheme: .unspecified)
+                self.updateMapStyle()
+            } else {
                 self.errorMessageController.message = "Custom style JSON is invalid"
                 self.present(self.errorMessageController, animated:true)
             }
         }))
         jsonInputController.addAction(UIAlertAction(title:"Cancel", style:.default, handler:{_ in
-            // resets the text
+            // Reset the text to default custom JSON.
             self.jsonInputController.textFields![0].text = self.customMapStyleString
         }))
 
@@ -191,25 +225,27 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if (row >= mapStyleStrings.count - 1) {
+        if (row >= MapStyle.all.count) {
             // custom map style
             self.present(self.jsonInputController, animated:true)
         }
         else {
-            self.mapView.setStyleSheet(mapStyles[row])
+            currentStyle = MapStyle.all[row]
+            updateMapStyle()
         }
     }
+
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
     // The number of rows of data
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return mapStyleStrings.count
+        return MapStyle.all.count + 1
     }
 
-    // The data to return fopr the row and component (column) that's being passed in
+    // The data to return for the row and component (column) that's being passed in
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return mapStyleStrings[row]
+        return row < MapStyle.all.count ? MapStyle.all[row].name : "Custom"
     }
 }
