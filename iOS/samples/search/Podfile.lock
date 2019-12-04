@@ -1,16 +1,16 @@
 PODS:
-  - MicrosoftMapsSDK (1.0.0)
+  - MicrosoftMapsSDK (1.0.2)
 
 DEPENDENCIES:
-  - MicrosoftMapsSDK (~> 1.0.0)
+  - MicrosoftMapsSDK (~> 1.0.2)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - MicrosoftMapsSDK
 
 SPEC CHECKSUMS:
-  MicrosoftMapsSDK: 0080441095875f9b7a928d77d7bd55374f04ffd0
+  MicrosoftMapsSDK: 9b04846c203419d0e0fb2fe1952d4e70c38be16e
 
-PODFILE CHECKSUM: b5202d2d47eeefabad6f81281c0af19bcd5bd7cc
+PODFILE CHECKSUM: 28b3b0c8cfda0fbfabbba471d5d10d278a2ca65d
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.8.4
