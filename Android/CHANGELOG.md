@@ -1,5 +1,14 @@
 # Bing Maps SDK for Android
 
+Version 1.0.2 - December 2019
+=============================
+## Improvements
+- Improves the experience when the map resumes.
+## Resolved Issues
+- Fixes a crash when setting a scene of locations.
+- Fixes position issues of flyout relative to its parent map icon.
+- Fixes an issue with compass rotation.
+
 Version 1.0.1 - November 2019
 =============================
 ## Improvements
