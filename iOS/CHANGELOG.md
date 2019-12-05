@@ -1,5 +1,15 @@
 # Bing Maps SDK for iOS
 
+Version 1.0.2 - December 2019
+=============================
+## Improvements
+- Improves the experience when the map resumes.
+## Resolved Issues
+- Fixes a crash when setting a scene of locations.
+- Fixes altitude values in a few places such as in map's center, map camera's location and map icon's location.
+- Fixes position issues of flyout relative to its parent map icon.
+- Fixes unexpected map zoom when setting a heading.
+
 Version 1.0.1 - November 2019
 =============================
 ## Improvements
