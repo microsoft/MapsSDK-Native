@@ -1,5 +1,15 @@
 # Bing Maps SDK for iOS
 
+Version 1.0.3 - January 2020
+============================
+## Improvements
+- Adds support for scene of locations with a desired maximum zoom level of detail.
+- Adds support for scene of locations with a desired minimum amount of space to display around the center.
+## Resolved Issues
+- Fixes level of detail when setting a scene of location and zoom level.
+- Fixes an issue with landmarks vanishing when style is reloaded.
+- Fixes an issue with map element tapped event not firing sometimes.
+
 Version 1.0.2 - December 2019
 =============================
 ## Improvements

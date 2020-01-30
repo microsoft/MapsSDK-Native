@@ -56,7 +56,7 @@ Open the newly created `Podfile` and specify the following:
 >   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
 >   use_frameworks!
 >
->   pod 'MicrosoftMapsSDK', '~> 1.0.2'
+>   pod 'MicrosoftMapsSDK', '~> 1.0.3'
 > end
 >```
 
