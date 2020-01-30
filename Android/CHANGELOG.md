@@ -8,7 +8,6 @@ Version 1.0.3 - January 2020
 ## Resolved Issues
 - Fixes level of detail when setting a scene of location and zoom level.
 - Fixes an issue with landmarks vanishing when style is reloaded.
-- Fixes an issue with map element tapped event not firing sometimes.
 
 Version 1.0.2 - December 2019
 =============================
