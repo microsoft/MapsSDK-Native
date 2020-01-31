@@ -1,5 +1,23 @@
 # Bing Maps SDK for Android
 
+Version 1.0.3 - January 2020
+============================
+## Improvements
+- Adds support for scene of locations with a desired maximum zoom level of detail.
+- Adds support for scene of locations with a desired minimum amount of space to display around the center.
+## Resolved Issues
+- Fixes level of detail when setting a scene of location and zoom level.
+- Fixes an issue with landmarks vanishing when style is reloaded.
+
+Version 1.0.2 - December 2019
+=============================
+## Improvements
+- Improves the experience when the map resumes.
+## Resolved Issues
+- Fixes a crash when setting a scene of locations.
+- Fixes position issues of flyout relative to its parent map icon.
+- Fixes an issue with compass rotation.
+
 Version 1.0.1 - November 2019
 =============================
 ## Improvements
