@@ -170,6 +170,7 @@ FkFkZCBvbiB0YXAgLSBMZWFkaW5nA
                         <outlet property="demoMenu" destination="6nK-Iv-xRv" id="hSw-Pe-yeA"/>
                         <outlet property="mapStylesPickerView" destination="CfN-iT-Y4z" id="gIb-D8-Lob"/>
                         <outlet property="mapView" destination="Dyx-RU-VK4" id="N3I-7g-oZE"/>
+                        <outlet property="parentView" destination="8bC-Xf-vdC" id="EKp-dK-lb0"/>
                         <outlet property="projectionSeg" destination="9A1-5A-Flc" id="U3F-Ui-UMd"/>
                     </connections>
                 </viewController>

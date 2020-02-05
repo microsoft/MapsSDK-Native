@@ -3,11 +3,6 @@ import MicrosoftMaps
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    let mapStyleCounterparts = [
-        "RoadLight": "RoadDark",
-        "RoadDark": "RoadLight",
-        "RoadHighContrastLight": "RoadHighContrastDark",
-        "RoadHighContrastDark": "RoadHighContrastLight"]
     let LOCATION_LAKE_WASHINGTON = MSGeopoint(latitude: 47.609466, longitude: -122.265185)
     let customMapStyleString = """
         {
@@ -42,6 +37,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     let errorMessageController = UIAlertController(title:"", message:"", preferredStyle: .alert)
     let jsonInputController = UIAlertController(title:"", message:"Enter style JSON", preferredStyle: .alert)
 
+    @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var mapView: MSMapView!
     @IBOutlet weak var demoButton: UIButton!
     @IBOutlet weak var demoMenu: UIView!
@@ -114,59 +110,25 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         setupDemoMenu()
 
-        currentStyle = MapStyle.roadLight
-        updateMapViewColorScheme()
+        currentStyle = self.traitCollection.userInterfaceStyle == .light ? MapStyle.roadLight : MapStyle.roadDark
+        updateMapStyle()
+        updateStylePicker()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         if #available(iOS 13.0, *) {
-            if !demoMenu.isHidden && currentStyle.colorScheme != self.traitCollection.userInterfaceStyle {
-                // Invert status bar color of demo menu if system UI theme doesn't match current map style.
-                return currentStyle.colorScheme == .dark ? .darkContent : .lightContent
-            } else {
-                return currentStyle.colorScheme == .dark ? .lightContent : .darkContent
-            }
+            return currentStyle.colorScheme == .dark ? .lightContent : .darkContent
         } else {
             return .default
         }
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if (self.traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle) {
-            updateMapViewColorScheme()
-        }
-    }
-
     func updateMapStyle() {
         mapView.setStyleSheet(currentStyle.styleSheet)
+        if #available(iOS 13.0, *) {
+            parentView.overrideUserInterfaceStyle = currentStyle.colorScheme
+        }
         self.setNeedsStatusBarAppearanceUpdate()
-    }
-
-    func updateMapViewColorScheme() {
-        if (currentStyle.colorScheme == .unspecified) {
-            // Custom style, don't know how to update.
-            return
-        }
-
-        if (self.traitCollection.userInterfaceStyle != currentStyle.colorScheme) {
-            let row = mapStylesPickerView.selectedRow(inComponent: 0)
-            guard let index = mapStyleCounterparts.index(forKey: MapStyle.all[row].name) else {
-                // Current style doesn't have a light/dark counterpart.
-                return
-            }
-
-            let newIndex = MapStyle.all.firstIndex { (style: MapStyle) -> Bool in
-                style.name == mapStyleCounterparts[index].value
-            }!
-            currentStyle = MapStyle.all[newIndex]
-
-            // Update the UI style picker.
-            mapStylesPickerView.selectRow(newIndex, inComponent: 0, animated: true)
-        }
-
-        updateMapStyle()
     }
 
     func setupDemoMenu() {
@@ -224,10 +186,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             // Reset the text to default custom JSON.
             self.jsonInputController.textFields![0].text = self.customMapStyleString
 
-            let oldIndex = MapStyle.all.firstIndex { (style: MapStyle) -> Bool in
-                style.name == self.currentStyle.name
-            }!
-            self.mapStylesPickerView.selectRow(oldIndex, inComponent: 0, animated: true)
+            self.updateStylePicker()
         }))
 
         mapStylesPickerView.delegate = self
@@ -257,5 +216,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     // The data to return for the row and component (column) that's being passed in
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return row < MapStyle.all.count ? MapStyle.all[row].name : "Custom"
+    }
+
+    func updateStylePicker() {
+        let oldIndex = MapStyle.all.firstIndex { (style: MapStyle) -> Bool in
+            style.name == currentStyle.name
+        }!
+        mapStylesPickerView.selectRow(oldIndex, inComponent: 0, animated: true)
     }
 }
