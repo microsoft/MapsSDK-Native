@@ -223,6 +223,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         jsonInputController.addAction(UIAlertAction(title:"Cancel", style:.default, handler:{_ in
             // Reset the text to default custom JSON.
             self.jsonInputController.textFields![0].text = self.customMapStyleString
+
+            let oldIndex = MapStyle.all.firstIndex { (style: MapStyle) -> Bool in
+                style.name == self.currentStyle.name
+            }!
+            self.mapStylesPickerView.selectRow(oldIndex, inComponent: 0, animated: true)
         }))
 
         mapStylesPickerView.delegate = self
