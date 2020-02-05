@@ -51,6 +51,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     @IBAction func hideOrShowDemoMenu(_ sender: Any) {
         demoMenu.isHidden = !demoMenu.isHidden
+        self.setNeedsStatusBarAppearanceUpdate()
     }
 
     @IBAction func onProjectChanged(_ sender: Any)
@@ -119,7 +120,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         if #available(iOS 13.0, *) {
-            return currentStyle.colorScheme == .dark ? .lightContent : .darkContent
+            if !demoMenu.isHidden && currentStyle.colorScheme != self.traitCollection.userInterfaceStyle {
+                // Invert status bar color of demo menu if system UI theme doesn't match current map style.
+                return currentStyle.colorScheme == .dark ? .darkContent : .lightContent
+            } else {
+                return currentStyle.colorScheme == .dark ? .lightContent : .darkContent
+            }
         } else {
             return .default
         }
@@ -139,29 +145,28 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func updateMapViewColorScheme() {
-        if (self.traitCollection.userInterfaceStyle == currentStyle.colorScheme) {
-            // No need to update, color scheme is already fitting.
-            return
-        }
         if (currentStyle.colorScheme == .unspecified) {
             // Custom style, don't know how to update.
             return
         }
 
-        let row = mapStylesPickerView.selectedRow(inComponent: 0)
-        guard let index = mapStyleCounterparts.index(forKey: MapStyle.all[row].name) else {
-            // Current style doesn't have a light/dark counterpart.
-            return
+        if (self.traitCollection.userInterfaceStyle != currentStyle.colorScheme) {
+            let row = mapStylesPickerView.selectedRow(inComponent: 0)
+            guard let index = mapStyleCounterparts.index(forKey: MapStyle.all[row].name) else {
+                // Current style doesn't have a light/dark counterpart.
+                return
+            }
+
+            let newIndex = MapStyle.all.firstIndex { (style: MapStyle) -> Bool in
+                style.name == mapStyleCounterparts[index].value
+            }!
+            currentStyle = MapStyle.all[newIndex]
+
+            // Update the UI style picker.
+            mapStylesPickerView.selectRow(newIndex, inComponent: 0, animated: true)
         }
 
-        let newIndex = MapStyle.all.firstIndex { (style: MapStyle) -> Bool in
-            style.name == mapStyleCounterparts[index].value
-        }!
-        currentStyle = MapStyle.all[newIndex]
         updateMapStyle()
-
-        // Update the UI style picker.
-        mapStylesPickerView.selectRow(newIndex, inComponent: 0, animated: true)
     }
 
     func setupDemoMenu() {
