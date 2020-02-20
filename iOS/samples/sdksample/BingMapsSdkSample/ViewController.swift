@@ -117,6 +117,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         if #available(iOS 13.0, *) {
+            // We want light status bar content for dark theme, and vice versa.
             return currentStyle.colorScheme == .dark ? .lightContent : .darkContent
         } else {
             return .default
