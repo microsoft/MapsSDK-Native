@@ -15,6 +15,7 @@
 		E15B0E73228E193A00B18A68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E15B0E71228E193A00B18A68 /* LaunchScreen.storyboard */; };
 		E15B0E7C228E1BB700B18A68 /* LocalSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15B0E7A228E1BB600B18A68 /* LocalSearch.swift */; };
 		E15B0E7D228E1BB700B18A68 /* mappin.svg in Resources */ = {isa = PBXBuildFile; fileRef = E15B0E7B228E1BB600B18A68 /* mappin.svg */; };
+		E1C81E15238640940064DB43 /* MapStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C81E14238640940064DB43 /* MapStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		E15B0E74228E193A00B18A68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E15B0E7A228E1BB600B18A68 /* LocalSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalSearch.swift; sourceTree = "<group>"; };
 		E15B0E7B228E1BB600B18A68 /* mappin.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mappin.svg; sourceTree = "<group>"; };
+		E1C81E14238640940064DB43 /* MapStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				E15B0E7A228E1BB600B18A68 /* LocalSearch.swift */,
 				E15B0E7B228E1BB600B18A68 /* mappin.svg */,
 				E15B0E68228E193A00B18A68 /* AppDelegate.swift */,
+				E1C81E14238640940064DB43 /* MapStyle.swift */,
 				E15B0E6A228E193A00B18A68 /* ViewController.swift */,
 				E15B0E6C228E193A00B18A68 /* Main.storyboard */,
 				E15B0E6F228E193A00B18A68 /* Assets.xcassets */,
@@ -210,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1C81E15238640940064DB43 /* MapStyle.swift in Sources */,
 				E15B0E6B228E193A00B18A68 /* ViewController.swift in Sources */,
 				E15B0E7C228E1BB700B18A68 /* LocalSearch.swift in Sources */,
 				E15B0E69228E193A00B18A68 /* AppDelegate.swift in Sources */,

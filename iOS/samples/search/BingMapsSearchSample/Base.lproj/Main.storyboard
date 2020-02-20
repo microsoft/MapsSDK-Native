@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,18 +36,17 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="1bY-Oa-hkW" secondAttribute="trailing" constant="30" id="6mn-PZ-4QZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="1bY-Oa-hkW" secondAttribute="bottom" constant="30" id="fLp-24-m9K"/>
+                                    <constraint firstAttribute="trailing" secondItem="1bY-Oa-hkW" secondAttribute="trailing" constant="30" id="6mn-PZ-4QZ" userLabel="Demo Button - Trailing"/>
+                                    <constraint firstAttribute="bottom" secondItem="1bY-Oa-hkW" secondAttribute="bottom" constant="30" id="fLp-24-m9K" userLabel="Demo Button - Bottom"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6nK-Iv-xRv">
-                                <rect key="frame" x="0.0" y="20" width="375" height="70.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="70.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ohh-Ta-cfR" userLabel="Statusbar color">
                                         <rect key="frame" x="0.0" y="-50" width="375" height="50"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="375" id="QCa-UI-kFb"/>
                                             <constraint firstAttribute="height" constant="50" id="hgd-hN-Sle"/>
                                         </constraints>
                                     </view>
@@ -86,33 +83,43 @@ FkFkZCBvbiB0YXA
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="a5B-Yc-54b" firstAttribute="leading" secondItem="Gqk-Mp-hmI" secondAttribute="trailing" constant="10" id="79R-59-N04"/>
-                                    <constraint firstItem="Sg3-uX-ph6" firstAttribute="leading" secondItem="XKQ-wV-YCo" secondAttribute="leading" id="95K-sQ-TB2"/>
-                                    <constraint firstItem="ohh-Ta-cfR" firstAttribute="centerX" secondItem="6nK-Iv-xRv" secondAttribute="centerX" id="KcR-4H-PRU"/>
-                                    <constraint firstItem="ohh-Ta-cfR" firstAttribute="bottom" secondItem="6nK-Iv-xRv" secondAttribute="top" id="OnN-Yi-Vkm"/>
-                                    <constraint firstAttribute="bottom" secondItem="Gqk-Mp-hmI" secondAttribute="bottom" constant="10" id="RFd-rc-jMv"/>
-                                    <constraint firstItem="XKQ-wV-YCo" firstAttribute="top" secondItem="6nK-Iv-xRv" secondAttribute="top" constant="10" id="T4f-Uy-p6x"/>
-                                    <constraint firstItem="wyC-hP-QUH" firstAttribute="centerY" secondItem="Sg3-uX-ph6" secondAttribute="centerY" id="Udq-PD-1y2"/>
-                                    <constraint firstItem="wyC-hP-QUH" firstAttribute="leading" secondItem="a5B-Yc-54b" secondAttribute="trailing" constant="10" id="VoC-nL-TXe"/>
-                                    <constraint firstItem="XKQ-wV-YCo" firstAttribute="leading" secondItem="6nK-Iv-xRv" secondAttribute="leading" constant="20" id="YKm-ek-WvZ"/>
-                                    <constraint firstItem="Gqk-Mp-hmI" firstAttribute="centerY" secondItem="Sg3-uX-ph6" secondAttribute="centerY" id="i9m-ve-h2p"/>
-                                    <constraint firstItem="Gqk-Mp-hmI" firstAttribute="leading" secondItem="Sg3-uX-ph6" secondAttribute="trailing" constant="5" id="qOB-ac-sZg"/>
-                                    <constraint firstItem="a5B-Yc-54b" firstAttribute="centerY" secondItem="Gqk-Mp-hmI" secondAttribute="centerY" id="u8d-JW-ojI"/>
-                                    <constraint firstItem="Sg3-uX-ph6" firstAttribute="top" secondItem="XKQ-wV-YCo" secondAttribute="bottom" constant="5" id="zW5-C1-vWo"/>
+                                    <constraint firstAttribute="trailing" secondItem="ohh-Ta-cfR" secondAttribute="trailing" id="3Ju-vK-85z" userLabel="Statusbar color - Trailing"/>
+                                    <constraint firstItem="a5B-Yc-54b" firstAttribute="leading" secondItem="Gqk-Mp-hmI" secondAttribute="trailing" constant="10" id="79R-59-N04" userLabel="ADD BY SEARCH - Leading"/>
+                                    <constraint firstItem="Sg3-uX-ph6" firstAttribute="leading" secondItem="XKQ-wV-YCo" secondAttribute="leading" id="95K-sQ-TB2" userLabel="ADD ON TAP - Leading"/>
+                                    <constraint firstItem="ohh-Ta-cfR" firstAttribute="centerX" secondItem="6nK-Iv-xRv" secondAttribute="centerX" id="KcR-4H-PRU" userLabel="Statusbar color - CenterX"/>
+                                    <constraint firstItem="ohh-Ta-cfR" firstAttribute="bottom" secondItem="6nK-Iv-xRv" secondAttribute="top" id="OnN-Yi-Vkm" userLabel="Statusbar color - Bottom"/>
+                                    <constraint firstAttribute="bottom" secondItem="Gqk-Mp-hmI" secondAttribute="bottom" constant="10" id="RFd-rc-jMv" userLabel="Add on tap - Bottom"/>
+                                    <constraint firstItem="XKQ-wV-YCo" firstAttribute="top" secondItem="6nK-Iv-xRv" secondAttribute="top" constant="10" id="T4f-Uy-p6x" userLabel="POIs - Top"/>
+                                    <constraint firstItem="wyC-hP-QUH" firstAttribute="centerY" secondItem="Sg3-uX-ph6" secondAttribute="centerY" id="Udq-PD-1y2" userLabel="CLEAR - CenterY"/>
+                                    <constraint firstItem="wyC-hP-QUH" firstAttribute="leading" secondItem="a5B-Yc-54b" secondAttribute="trailing" constant="10" id="VoC-nL-TXe" userLabel="CLEAR - Leading"/>
+                                    <constraint firstItem="XKQ-wV-YCo" firstAttribute="leading" secondItem="6nK-Iv-xRv" secondAttribute="leading" constant="20" id="YKm-ek-WvZ" userLabel="POIs - Leading"/>
+                                    <constraint firstItem="Gqk-Mp-hmI" firstAttribute="centerY" secondItem="Sg3-uX-ph6" secondAttribute="centerY" id="i9m-ve-h2p">
+                                        <string key="userLabel" base64-UTF8="YES">
+FkFkZCBvbiB0YXAgLSBDZW50ZXJZA
+</string>
+                                    </constraint>
+                                    <constraint firstItem="Gqk-Mp-hmI" firstAttribute="leading" secondItem="Sg3-uX-ph6" secondAttribute="trailing" constant="5" id="qOB-ac-sZg">
+                                        <string key="userLabel" base64-UTF8="YES">
+FkFkZCBvbiB0YXAgLSBMZWFkaW5nA
+</string>
+                                    </constraint>
+                                    <constraint firstItem="ohh-Ta-cfR" firstAttribute="leading" secondItem="6nK-Iv-xRv" secondAttribute="leading" id="t22-SW-hql" userLabel="Statusbar color - Leading"/>
+                                    <constraint firstItem="a5B-Yc-54b" firstAttribute="centerY" secondItem="Gqk-Mp-hmI" secondAttribute="centerY" id="u8d-JW-ojI" userLabel="ADD BY SEARCH - CenterY"/>
+                                    <constraint firstItem="Sg3-uX-ph6" firstAttribute="top" secondItem="XKQ-wV-YCo" secondAttribute="bottom" constant="5" id="zW5-C1-vWo" userLabel="ADD ON TAP - Top"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="6nK-Iv-xRv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7ef-iO-ou7"/>
-                            <constraint firstItem="6nK-Iv-xRv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="B8j-zC-HxE"/>
-                            <constraint firstItem="6nK-Iv-xRv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="GqL-5p-byE"/>
-                            <constraint firstItem="Dyx-RU-VK4" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="LXV-gd-Pug"/>
-                            <constraint firstItem="Dyx-RU-VK4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="NP1-Bf-Uoq"/>
-                            <constraint firstItem="Dyx-RU-VK4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="o2l-hs-SZb"/>
-                            <constraint firstItem="Dyx-RU-VK4" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="pGf-39-Gxs"/>
+                            <constraint firstItem="6nK-Iv-xRv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7ef-iO-ou7" userLabel="Demo Menu - Trailing"/>
+                            <constraint firstItem="6nK-Iv-xRv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="B8j-zC-HxE" userLabel="Demo Menu - Leading"/>
+                            <constraint firstItem="6nK-Iv-xRv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="GqL-5p-byE" userLabel="Demo Menu - Top"/>
+                            <constraint firstItem="Dyx-RU-VK4" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="LXV-gd-Pug" userLabel="Map View - Bottom"/>
+                            <constraint firstItem="Dyx-RU-VK4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="NP1-Bf-Uoq" userLabel="Map View - Leading"/>
+                            <constraint firstItem="Dyx-RU-VK4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="o2l-hs-SZb" userLabel="Map View - Top"/>
+                            <constraint firstItem="Dyx-RU-VK4" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="pGf-39-Gxs" userLabel="Map View - Trailing"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

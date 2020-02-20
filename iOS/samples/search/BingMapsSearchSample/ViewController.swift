@@ -80,6 +80,21 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         }
 
         setupDemoMenu()
+        updateMapViewColorScheme()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if (self.traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle) {
+            updateMapViewColorScheme()
+        }
+    }
+
+    func updateMapViewColorScheme() {
+        mapView.setStyleSheet(self.traitCollection.userInterfaceStyle == .dark ?
+            MSMapStyleSheets.roadDark() :
+            MSMapStyleSheets.roadLight())
     }
 
     func setupDemoMenu() {
