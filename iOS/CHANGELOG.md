@@ -1,5 +1,22 @@
 # Bing Maps SDK for iOS
 
+Version 1.1.0 - March 2020
+==========================
+## Improvements
+- Adds support for additional markets, like Japan and Korea.
+- Adds language fallback support.
+- Improves accessibility support for VoiceOver.
+## Resolved Issues
+- Fixes scene changed events so that callbacks are always invoked on the UI thread.
+- Fixes an issue causing heading and pitch to be slightly off in some scenes.
+## Breaking changes
+- Changes `MSMapView`'s panning methods to use device-independent points, and renames them accordingly:
+  - `panWithHorizontalPixels:verticalPixels:` to `panWithHorizontalPoints:verticalPoints:`
+  - `beginPanWithHorizontalPixels:verticalPixels:completionCallback:` to `beginPanWithHorizontalPoints:verticalPoints:completionCallback:`
+  - `startContinuousPanWithHorizontalPixelsPerSecond:verticalPixelsPerSecond:` to `startContinuousPanWithHorizontalPointsPerSecond:verticalPointsPerSecond:`
+- Changes `MSMapView`'s property `MapSize` to use device-independent points.
+- Renames `MSMapIcon`'s property `collisionBehaviorDesired` to `desiredCollisionBehavior`.
+
 Version 1.0.3 - January 2020
 ============================
 ## Improvements

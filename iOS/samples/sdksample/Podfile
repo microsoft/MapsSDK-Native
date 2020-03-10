@@ -7,5 +7,5 @@ target 'BingMapsSdkSample' do
   use_frameworks!
 
   # Pods for BingMapsSdkSample
-  pod 'MicrosoftMapsSDK', '~> 1.0.3'
+  pod 'MicrosoftMapsSDK', '~> 1.1.0'
 end

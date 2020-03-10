@@ -1,5 +1,24 @@
 # Bing Maps SDK for Android
 
+Version 1.1.0 - March 2020
+==========================
+## Improvements
+- Adds support for additional markets, like Japan and Korea.
+- Adds language fallback support.
+- Adds 64-bit emulator support.
+## Resolved Issues
+- Fixes scene changed events so that callbacks are always invoked on the UI thread.
+- Fixes an issue causing heading and pitch to be slightly off in some scenes.
+## Breaking changes
+- Changes `MapView`'s properties `MapSize` and `ViewPadding` to use device-independent pixels.
+- Changes `MapView`'s panning methods to use device-independent pixels. The change affects the following methods:
+  - `pan`
+  - `beginPan`
+  - `startContinuousPan`
+  - `beginStartContinuousPan`
+- Renames `OnMapLoadingStatusChangedListener`'s callback method `onMapLoadingStatusChanging` to `onMapLoadingStatusChanged`.
+- Renames `MapFlyout.CustomViewAdapter`'s method `getView` to `getFlyoutView`.
+
 Version 1.0.3 - January 2020
 ============================
 ## Improvements
