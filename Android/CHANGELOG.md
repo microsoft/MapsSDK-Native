@@ -27,6 +27,7 @@ Version 1.0.3 - January 2020
 ## Resolved Issues
 - Fixes level of detail when setting a scene of location and zoom level.
 - Fixes an issue with landmarks vanishing when style is reloaded.
+- Fixes an issue with map element tapped event not firing sometimes.
 
 Version 1.0.2 - December 2019
 =============================
@@ -51,7 +52,7 @@ Version 1.0.1 - November 2019
 ## Resolved Issues
 - Fixes management of resources upon suspend and resume.
 - Fixes a crash when `GroundOverlayMapLayer` is used.
-- Fixes other intermittent crashes.
+- Fixes other intermitent crashes.
 
 Version 1.0.0 - September 2019
 ==============================
@@ -59,11 +60,11 @@ Version 1.0.0 - September 2019
 - Updates various public classes.
 - Introduces `Geoshape` and `Geoposition` classes, and refactors all `Geo` classes accordingly.
 - Renames `Geolocation` to `Geopoint`.
-- Renames several `MapView` methods and properties, including lifecycle related handlers.
+- Renames several `MapView`'s methods and properties, including lifecycle related handlers.
 - Renames various listeners and ensures callbacks are invoked on the UI thread.
 - Removes icon drag related methods and interfaces.
-- Renames several `MapFlyout` methods and properties.
-- Renames several `MapUserInterfaceOptions` properties.
+- Renames several `MapFlyout`'s methods and properties.
+- Renames several `MapUserInterfaceOptions`'s properties.
 - Renames a few `Search` types and listeners.
 - Moves all `Search` enums into their own files.
 
@@ -88,9 +89,9 @@ For more details see the full list of [Breaking API changes in version 1.0](http
 Version 0.2.0 - July 2019
 =========================
 ## Breaking changes
-- Renames `MapIcon` method `getFlyoutShown` to `getIsFlyoutVisible` and adds `setIsFlyoutVisible`.
+- Renames `MapIcon`'s method `getFlyoutShown` to `getIsFlyoutVisible` and adds `setIsFlyoutVisible`.
 - Renames several `MapCamera` related classes.
-- Renames `MapView` method `doesViewContainLocation` to `isLocationInView`.
+- Renames `MapView`'s method `doesViewContainLocation` to `isLocationInView`.
 ## Improvements
 - Adds support for ARM64.
 - Adds new event `MapElementLayer.MapElementTapped`.

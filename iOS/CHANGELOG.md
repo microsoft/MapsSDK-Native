@@ -25,7 +25,6 @@ Version 1.0.3 - January 2020
 ## Resolved Issues
 - Fixes level of detail when setting a scene of location and zoom level.
 - Fixes an issue with landmarks vanishing when style is reloaded.
-- Fixes an issue with map element tapped event not firing sometimes.
 
 Version 1.0.2 - December 2019
 =============================
@@ -52,7 +51,7 @@ Version 1.0.1 - November 2019
 ## Resolved Issues
 - Fixes management of resources upon suspend and resume.
 - Fixes memory leaks.
-- Fixes other intermittent crashes.
+- Fixes other intermitent crashes.
 
 Version 1.0.0 - September 2019
 ==============================
@@ -60,10 +59,10 @@ Version 1.0.0 - September 2019
 - Updates various public classes.
 - Introduces `MSGeoshape` and `MSGeoposition` classes, and refactors all `MSGeo` classes accordingly.
 - Renames `MSGeolocation` to `MSGeopoint`.
-- Renames several `MSMapView` methods and properties.
+- Renames several `MSMapView`'s methods and properties.
 - Renames various callback interfaces and ensures callbacks are invoked on the UI thread.
-- Renames several `MSMapFlyout` methods and properties.
-- Renames several `MSMapUserInterfaceOptions` properties.
+- Renames several `MSMapFlyout`'s methods and properties.
+- Renames several `MSMapUserInterfaceOptions`'s properties.
 - Renames a few `Search` types and callback interfaces.
 - Moves all `Search` enums into their own files.
 
@@ -90,7 +89,7 @@ Version 0.2.0 - July 2019
 ## Breaking changes
 - Renames enum `MSMapCameraChangeCause` to `MSMapCameraChangeReason`.
 ## Improvements
-- Adds default values for `MSMapFlyout` properties `PlacementOffset` and `ZIndex`.
+- Adds default values for `MSMapFlyout`'s properties `PlacementOffset` and `ZIndex`.
 ## Resolved Issues
 - Fixes a crash caused by calling `MSMapIcon::isFlyoutVisible` when flyout does not exist.
 
