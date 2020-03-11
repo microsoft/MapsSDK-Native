@@ -28,8 +28,7 @@ Ready to run!
 
     When it comes to language, this tutorial is in **Java**, though feel free to use Kotlin if that's your preference.
 
-    Set **API 16** or higher as your Minimum API level.  
-    *Note: we are planning to deprecate support for API level 16 in the future.*
+    Set **API 19** or higher as your Minimum API level.
 
     Press **Finish** when you're ready.
 
