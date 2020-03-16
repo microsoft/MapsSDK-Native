@@ -1,5 +1,11 @@
 # Bing Maps SDK for iOS
 
+Version 1.1.1 - March 2020
+==========================
+## Resolved Issues
+- Fixes an intermittent crash due to a race condition when the map loads.
+- Fixes an issue causing a map icon to disappear sometimes when moved to a different layer.
+
 Version 1.1.0 - March 2020
 ==========================
 ## Improvements
@@ -51,7 +57,7 @@ Version 1.0.1 - November 2019
 ## Resolved Issues
 - Fixes management of resources upon suspend and resume.
 - Fixes memory leaks.
-- Fixes other intermitent crashes.
+- Fixes other intermittent crashes.
 
 Version 1.0.0 - September 2019
 ==============================
