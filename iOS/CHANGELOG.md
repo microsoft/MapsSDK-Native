@@ -57,7 +57,7 @@ Version 1.0.1 - November 2019
 ## Resolved Issues
 - Fixes management of resources upon suspend and resume.
 - Fixes memory leaks.
-- Fixes other intermitent crashes.
+- Fixes other intermittent crashes.
 
 Version 1.0.0 - September 2019
 ==============================
