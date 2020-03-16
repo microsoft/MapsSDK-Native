@@ -3,7 +3,7 @@
 Version 1.1.1 - March 2020
 ==========================
 ## Resolved Issues
-- Fixes an intermitent crash due to a race condition when the map loads.
+- Fixes an intermittent crash due to a race condition when the map loads.
 - Fixes an issue causing a map icon to disappear sometimes when moved to a different layer.
 
 Version 1.1.0 - March 2020
