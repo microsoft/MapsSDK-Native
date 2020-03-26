@@ -1,5 +1,13 @@
 # Bing Maps SDK for Android
 
+Version 1.1.2 - March 2020
+==========================
+## Improvements
+- Improves query validation in `MapLocationFinder`.
+## Resolved Issues
+- Fixes a missing tiles issue when the map transitions from Globe to web Mercator projection.
+- Fixes an intermittent crash reported in some devices after map disposal.
+
 Version 1.1.1 - March 2020
 ==========================
 ## Resolved Issues

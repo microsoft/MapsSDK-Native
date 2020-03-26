@@ -1,5 +1,14 @@
 # Bing Maps SDK for iOS
 
+Version 1.1.2 - March 2020
+==========================
+## Improvements
+- Allows colors in an extended sRGB space such as *Display P3*.
+- Improves query validation in `MSMapLocationFinder`.
+## Resolved Issues
+- Fixes a missing tiles issue when the map transitions from Globe to web Mercator projection.
+- Fixes an intermittent crash reported in some devices after map disposal.
+
 Version 1.1.1 - March 2020
 ==========================
 ## Resolved Issues
