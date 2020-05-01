@@ -5,6 +5,8 @@ Version 1.1.3 - April 2020
 ## Improvements
 - Adds support for Chinese languages.
 - Improves accessibility support for TalkBack.
+## Resolved Issues
+- Fixes various Strict Mode violations.
 
 Version 1.1.2 - March 2020
 ==========================
