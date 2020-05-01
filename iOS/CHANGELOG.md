@@ -1,5 +1,12 @@
 # Bing Maps SDK for iOS
 
+Version 1.1.3 - April 2020
+==========================
+## Improvements
+- Adds support for Chinese languages.
+## Resolved Issues
+- Fixes an accessibility issue where the compass could get focus while hidden.
+
 Version 1.1.2 - March 2020
 ==========================
 ## Improvements
