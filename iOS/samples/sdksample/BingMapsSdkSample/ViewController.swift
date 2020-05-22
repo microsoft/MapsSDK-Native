@@ -30,12 +30,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     """
 
-    var pinLayer:MSMapElementLayer!
-    var pinImage:MSMapImage!
-    var currentStyle: MapStyle!
     let searchStringController = UIAlertController(title:"", message:"Enter a search string", preferredStyle:.alert)
     let errorMessageController = UIAlertController(title:"", message:"", preferredStyle: .alert)
     let jsonInputController = UIAlertController(title:"", message:"Enter style JSON", preferredStyle: .alert)
+
+    var pinLayer:MSMapElementLayer!
+    var pinImage:MSMapImage!
+    var currentStyle: MapStyle!
+
+    var untitledPushpinCount = 0
 
     @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var mapView: MSMapView!
@@ -95,15 +98,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         mapView.addUserDidTapHandler{ (point:CGPoint, location:MSGeopoint?) -> Bool in
             if self.addOnTapSwitch.isOn {
-                let pushpin = MSMapIcon()
-                pushpin.location = location!
-                if self.pinImage != nil {
-                    pushpin.image = self.pinImage
-                    pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
-                }
-                pushpin.accessibilityLabel = "Pushpin"
-                self.pinLayer.elements.add(pushpin)
-
+                self.addPin(atLocation: location!, withTitle: "")
                 return true
             }
             return false
@@ -133,6 +128,24 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.setNeedsStatusBarAppearanceUpdate()
     }
 
+    func addPin(atLocation location: MSGeopoint, withTitle title: String) {
+        let pushpin = MSMapIcon()
+        pushpin.location = location
+        pushpin.title = title
+        if self.pinImage != nil {
+            pushpin.image = self.pinImage
+            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
+        }
+        pushpin.accessibilityLabel = "Pushpin"
+        if (title.isEmpty) {
+            untitledPushpinCount += 1;
+            pushpin.accessibilityValue = String(untitledPushpinCount);
+        } else {
+            pushpin.accessibilityValue = title;
+        }
+        self.pinLayer.elements.add(pushpin)
+    }
+
     func setupDemoMenu() {
         searchStringController.addTextField {(textField) in
             textField.text = ""
@@ -148,14 +161,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
                 else {
                     for result in results! {
-                        let pushpin = MSMapIcon()
-                        pushpin.location = result.location
-                        pushpin.title = result.name as String
-                        if self.pinImage != nil {
-                            pushpin.image = self.pinImage
-                            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
-                        }
-                        self.pinLayer.elements.add(pushpin)
+                        self.addPin(atLocation: result.location, withTitle: result.name as String)
                     }
                 }
             })
