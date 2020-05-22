@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         if (title.isEmpty()) {
             pushpin.setContentDescription(String.format(
                     Locale.ROOT,
-                    "Pushpin %d",
+                    "Untitled pushpin %d",
                     ++mUntitledPushpinCount));
         }
         mPinLayer.getElements().add(pushpin);

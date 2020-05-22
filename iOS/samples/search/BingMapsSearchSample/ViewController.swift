@@ -6,10 +6,13 @@ class ViewController: UIViewController, UIPickerViewDelegate {
     let CREDENTIALS_KEY = Bundle.main.infoDictionary?["CREDENTIALS_KEY"] as! String
     let LOCATION_LAKE_WASHINGTON = MSGeopoint(latitude: 47.609466, longitude: -122.265185)
 
+    let errorMessageController = UIAlertController(title:"", message:"", preferredStyle: .alert)
+
+    var geocodeController: GeocodeAlertController!
     var pinLayer: MSMapElementLayer!
     var pinImage: MSMapImage!
-    var geocodeController: GeocodeAlertController!
-    let errorMessageController = UIAlertController(title:"", message:"", preferredStyle: .alert)
+
+    var untitledPushpinCount = 0
 
     @IBOutlet weak var mapView: MSMapView!
     @IBOutlet weak var demoButton: UIButton!
@@ -61,16 +64,15 @@ class ViewController: UIViewController, UIPickerViewDelegate {
                         self.showMessage("No search result found")
                         return
                     }
-                    let pushpin = MSMapIcon()
-                    pushpin.location = MSGeopoint(
+                    let pinLocation = MSGeopoint(
                         latitude: location!.position.latitude,
                         longitude: location!.position.longitude)
-                    pushpin.title = result.locations[0].address.formattedAddress
-                    if self.pinImage != nil {
-                        pushpin.image = self.pinImage
-                        pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1)
-                    }
-                    self.pinLayer.elements.add(pushpin)
+                    let geocodeLocation = result.locations[0]
+                    let pinTitle = String(
+                        format: "%@ (%@)",
+                        geocodeLocation.displayName,
+                        geocodeLocation.entityType)
+                    self.addPin(atLocation: pinLocation, withTitle: pinTitle)
                 default:
                     self.showMessage("Error processing the request")
                 }
@@ -86,7 +88,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        if (self.traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle) {
+        if self.traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
             updateMapViewColorScheme()
         }
     }
@@ -106,6 +108,24 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         geocodeController.delegate = self
 
         errorMessageController.addAction(UIAlertAction(title:"OK", style:.default))
+    }
+
+    func addPin(atLocation location: MSGeopoint, withTitle title: String) {
+        let pushpin = MSMapIcon()
+        pushpin.location = location
+        pushpin.title = title
+        if self.pinImage != nil {
+            pushpin.image = self.pinImage
+            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
+        }
+        pushpin.accessibilityLabel = "Pushpin"
+        if title.isEmpty {
+            untitledPushpinCount += 1;
+            pushpin.accessibilityValue = String(format: "Untitled %d", untitledPushpinCount);
+        } else {
+            pushpin.accessibilityValue = title;
+        }
+        self.pinLayer.elements.add(pushpin)
     }
 
     func showMessage(_ message: String) {
@@ -145,22 +165,15 @@ extension ViewController: GeocodeAlertDelegate {
                 let locations = NSMutableArray()
 
                 for mapLocation in result.locations {
-                    let pushpin = MSMapIcon()
-                    pushpin.location = MSGeopoint(
+                    let pinLocation = MSGeopoint(
                         latitude: mapLocation.point.position.latitude,
                         longitude: mapLocation.point.position.longitude,
                         altitude: 0,
                         altitudeReferenceSystem: MSMapAltitudeReferenceSystem.terrain)
-                    pushpin.title = mapLocation.displayName
-                    if self.pinImage != nil {
-                        pushpin.image = self.pinImage
-                        pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1)
-                    }
-                    self.pinLayer.elements.add(pushpin)
-
+                    self.addPin(atLocation: pinLocation, withTitle: mapLocation.displayName)
                     locations.add(mapLocation.point)
                 }
-                if (locations.count > 1) {
+                if locations.count > 1 {
                     self.mapView.setScene(MSMapScene(locations: locations as! [MSGeopoint]), with: MSMapAnimationKind.default)
                 } else {
                     self.mapView.setScene(MSMapScene(location: locations[0] as! MSGeopoint), with: MSMapAnimationKind.default)

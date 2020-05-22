@@ -128,24 +128,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.setNeedsStatusBarAppearanceUpdate()
     }
 
-    func addPin(atLocation location: MSGeopoint, withTitle title: String) {
-        let pushpin = MSMapIcon()
-        pushpin.location = location
-        pushpin.title = title
-        if self.pinImage != nil {
-            pushpin.image = self.pinImage
-            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
-        }
-        pushpin.accessibilityLabel = "Pushpin"
-        if (title.isEmpty) {
-            untitledPushpinCount += 1;
-            pushpin.accessibilityValue = String(untitledPushpinCount);
-        } else {
-            pushpin.accessibilityValue = title;
-        }
-        self.pinLayer.elements.add(pushpin)
-    }
-
     func setupDemoMenu() {
         searchStringController.addTextField {(textField) in
             textField.text = ""
@@ -182,7 +164,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.jsonInputController.textFields![0].text = self.customMapStyleString
 
             var styleSheetFromJson:MSMapStyleSheet? = nil
-            if (customMapStyleString != nil && MSMapStyleSheet.try(toParseJson: customMapStyleString!, into:&styleSheetFromJson)) {
+            if customMapStyleString != nil && MSMapStyleSheet.try(toParseJson: customMapStyleString!, into:&styleSheetFromJson) {
                 self.currentStyle = MapStyle(name: "Custom", styleSheet: styleSheetFromJson!, colorScheme: .unspecified)
                 self.updateMapStyle()
             } else {
@@ -201,8 +183,26 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         mapStylesPickerView.dataSource = self
     }
 
+    func addPin(atLocation location: MSGeopoint, withTitle title: String) {
+        let pushpin = MSMapIcon()
+        pushpin.location = location
+        pushpin.title = title
+        if self.pinImage != nil {
+            pushpin.image = self.pinImage
+            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
+        }
+        pushpin.accessibilityLabel = "Pushpin"
+        if title.isEmpty {
+            untitledPushpinCount += 1;
+            pushpin.accessibilityValue = String(format: "Untitled %d", untitledPushpinCount);
+        } else {
+            pushpin.accessibilityValue = title;
+        }
+        self.pinLayer.elements.add(pushpin)
+    }
+
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if (row >= MapStyle.all.count) {
+        if row >= MapStyle.all.count {
             // custom map style
             self.present(self.jsonInputController, animated:true)
         }
