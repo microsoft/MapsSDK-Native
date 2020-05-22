@@ -101,6 +101,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     pushpin.image = self.pinImage
                     pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
                 }
+                pushpin.accessibilityLabel = "Pushpin"
                 self.pinLayer.elements.add(pushpin)
 
                 return true
