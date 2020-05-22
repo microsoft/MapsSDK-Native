@@ -3,6 +3,7 @@ package com.microsoft.maps.sample.sdksample;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -38,6 +39,7 @@ import com.microsoft.maps.MapTappedEventArgs;
 import com.microsoft.maps.MapView;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,17 +65,21 @@ public class MainActivity extends AppCompatActivity {
     private int mStyleSpinnerPosition;
     private AppCompatButton mButtonPoiTap;
 
+    private int mUntitledPushpinCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Enable translucent status bar if supported by Android version.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        // Enable translucent status bar.
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.argb(128, 0, 0, 0));
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        } else {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
         mMapView = new MapView(this, MapRenderMode.VECTOR);
@@ -211,6 +217,12 @@ public class MainActivity extends AppCompatActivity {
         pushpin.setTitle(title);
         pushpin.setImage(mPinImage);
         pushpin.setNormalizedAnchorPoint(new PointF(0.5f, 1f));
+        if (title.isEmpty()) {
+            pushpin.setContentDescription(String.format(
+                    Locale.ROOT,
+                    "Untitled pushpin %d",
+                    ++mUntitledPushpinCount));
+        }
         mPinLayer.getElements().add(pushpin);
     }
 

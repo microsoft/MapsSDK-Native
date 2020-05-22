@@ -37,7 +37,9 @@ class LocalSearch: NSObject {
         let session = URLSession.shared
 
         session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-            _completion(parse(data:data))
+            DispatchQueue.main.async {
+                _completion(parse(data:data))
+            }
         }).resume()
     }
 

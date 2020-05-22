@@ -30,12 +30,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     """
 
-    var pinLayer:MSMapElementLayer!
-    var pinImage:MSMapImage!
-    var currentStyle: MapStyle!
     let searchStringController = UIAlertController(title:"", message:"Enter a search string", preferredStyle:.alert)
     let errorMessageController = UIAlertController(title:"", message:"", preferredStyle: .alert)
     let jsonInputController = UIAlertController(title:"", message:"Enter style JSON", preferredStyle: .alert)
+
+    var pinLayer:MSMapElementLayer!
+    var pinImage:MSMapImage!
+    var currentStyle: MapStyle!
+
+    var untitledPushpinCount = 0
 
     @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var mapView: MSMapView!
@@ -95,14 +98,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         mapView.addUserDidTapHandler{ (point:CGPoint, location:MSGeopoint?) -> Bool in
             if self.addOnTapSwitch.isOn {
-                let pushpin = MSMapIcon()
-                pushpin.location = location!
-                if self.pinImage != nil {
-                    pushpin.image = self.pinImage
-                    pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
-                }
-                self.pinLayer.elements.add(pushpin)
-
+                self.addPin(atLocation: location!, withTitle: "")
                 return true
             }
             return false
@@ -147,14 +143,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
                 else {
                     for result in results! {
-                        let pushpin = MSMapIcon()
-                        pushpin.location = result.location
-                        pushpin.title = result.name as String
-                        if self.pinImage != nil {
-                            pushpin.image = self.pinImage
-                            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
-                        }
-                        self.pinLayer.elements.add(pushpin)
+                        self.addPin(atLocation: result.location, withTitle: result.name as String)
                     }
                 }
             })
@@ -175,7 +164,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.jsonInputController.textFields![0].text = self.customMapStyleString
 
             var styleSheetFromJson:MSMapStyleSheet? = nil
-            if (customMapStyleString != nil && MSMapStyleSheet.try(toParseJson: customMapStyleString!, into:&styleSheetFromJson)) {
+            if customMapStyleString != nil && MSMapStyleSheet.try(toParseJson: customMapStyleString!, into:&styleSheetFromJson) {
                 self.currentStyle = MapStyle(name: "Custom", styleSheet: styleSheetFromJson!, colorScheme: .unspecified)
                 self.updateMapStyle()
             } else {
@@ -194,8 +183,26 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         mapStylesPickerView.dataSource = self
     }
 
+    func addPin(atLocation location: MSGeopoint, withTitle title: String) {
+        let pushpin = MSMapIcon()
+        pushpin.location = location
+        pushpin.title = title
+        if self.pinImage != nil {
+            pushpin.image = self.pinImage
+            pushpin.normalizedAnchorPoint = CGPoint(x: 0.5, y: 1.0)
+        }
+        pushpin.accessibilityLabel = "Pushpin"
+        if title.isEmpty {
+            untitledPushpinCount += 1;
+            pushpin.accessibilityValue = String(format: "Untitled %d", untitledPushpinCount);
+        } else {
+            pushpin.accessibilityValue = title;
+        }
+        self.pinLayer.elements.add(pushpin)
+    }
+
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if (row >= MapStyle.all.count) {
+        if row >= MapStyle.all.count {
             // custom map style
             self.present(self.jsonInputController, animated:true)
         }
