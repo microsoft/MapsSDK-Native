@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.res.ResourcesCompat;
@@ -58,13 +57,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Enable translucent status bar if supported by Android version.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
+        // Enable translucent status bar.
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
         mMapView = new MapView(this, MapRenderMode.VECTOR);
         mMapView.onCreate(savedInstanceState);
@@ -122,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
                                 String pinTitle = String.format(
                                     Locale.ROOT,
                                     "%s (%s)",
-                                    resultLocation.getDisplayName(), resultLocation.getEntityType());
+                                    resultLocation.getDisplayName(),
+                                    resultLocation.getEntityType());
 
                                 addPin(pinLocation, pinTitle);
 
@@ -204,6 +202,9 @@ public class MainActivity extends AppCompatActivity {
         pushpin.setTitle(title);
         pushpin.setImage(mPinImage);
         pushpin.setNormalizedAnchorPoint(new PointF(0.5f, 1f));
+        if (title.isEmpty()) {
+            pushpin.setContentDescription("Pushpin");
+        }
         mPinLayer.getElements().add(pushpin);
     }
 
