@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private View mDemoMenu;
     private AppCompatButton mButtonPoiTap;
 
+    private int mUntitledPushpinCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,7 +211,10 @@ public class MainActivity extends AppCompatActivity {
         pushpin.setImage(mPinImage);
         pushpin.setNormalizedAnchorPoint(new PointF(0.5f, 1f));
         if (title.isEmpty()) {
-            pushpin.setContentDescription("Pushpin");
+            pushpin.setContentDescription(String.format(
+                    Locale.ROOT,
+                    "Pushpin %d",
+                    ++mUntitledPushpinCount));
         }
         mPinLayer.getElements().add(pushpin);
     }

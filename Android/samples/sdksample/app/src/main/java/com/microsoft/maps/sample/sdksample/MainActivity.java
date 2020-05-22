@@ -39,6 +39,7 @@ import com.microsoft.maps.MapTappedEventArgs;
 import com.microsoft.maps.MapView;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private Spinner mStyleSpinner;
     private int mStyleSpinnerPosition;
     private AppCompatButton mButtonPoiTap;
+
+    private int mUntitledPushpinCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,7 +218,10 @@ public class MainActivity extends AppCompatActivity {
         pushpin.setImage(mPinImage);
         pushpin.setNormalizedAnchorPoint(new PointF(0.5f, 1f));
         if (title.isEmpty()) {
-            pushpin.setContentDescription("Pushpin");
+            pushpin.setContentDescription(String.format(
+                    Locale.ROOT,
+                    "Pushpin %d",
+                    ++mUntitledPushpinCount));
         }
         mPinLayer.getElements().add(pushpin);
     }
