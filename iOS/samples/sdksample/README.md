@@ -25,7 +25,7 @@ Ready to run!
 
 * After XCode is installed, create a new project in it.
 
-    Select **File > New > Project** tab and choose **iOS > Single View Application** from Project selection view, press **Next**.
+    Select **File > New > Project** tab and choose **iOS > Single View App** from Project selection view, press **Next**.
 
 * Choose a name and fill other options for your project.
 
@@ -66,21 +66,26 @@ Open the workspace file in XCode and you are ready to use the map control.
 
 ### Adding a map view to your activity
 
-Add UIView to the scene and set its class to MSMapView.
+Go to your storyboard (create it if needed), add a view controller element, then add a UIView to it and set its class to MSMapView.
 
-<img src="https://github.com/Microsoft/MapsSDK-Native/wiki/Content/Getting-Started-iOS/add-map.png" alt= "Add the map">
+<img src="https://github.com/Microsoft/MapsSDK-Native/wiki/Content/Getting-Started-iOS/add-map.png" alt= "Adding the map view">
 
-Add following import to yout UIViewController (`BingMapsiOSSampleApp/{your_view_controller}.swift`):
+Create a Swift source file that will be your view controller, add a `MicrosoftMaps` import statement and create an outlet for the map view:
 
 >```swift
+> import UIKit
 > import MicrosoftMaps
+>
+> class ViewController : UIViewController {
+>     @IBOutlet weak var mapView: MSMapView!
+> }
 >```
 
-Create IBOutlet for the map
+Then go back to the storyboard, right click on the map view element and add a referencing outlet, connecting it to the `mapView` member of your `ViewController` class. Make sure that, in the storyboard, view controller's custom class is set to the one you created.
 
-<img src="https://github.com/Microsoft/MapsSDK-Native/wiki/Content/Getting-Started-iOS/outlet-swift.png" alt= "Outlet for Swift">
+<img src="https://github.com/Microsoft/MapsSDK-Native/wiki/Content/Getting-Started-iOS/outlet-swift.png" alt= "Connecting the outlet">
 
-Set the map key in viewDidLoad
+Finally, override `viewDidLoad` method of the view controller and set your credentials there:
 
 >```swift
 > override func viewDidLoad() {
