@@ -1,5 +1,15 @@
 # Bing Maps SDK for iOS
 
+Version 1.1.4 - May 2020
+========================
+## Improvements
+- Improves memory usage (peak memory).
+## Resolved Issues
+- Fixes a few memory leaks and retain cycles.
+- Fixes intermittent crashes observed on some devices.
+- Fixes some cases where Japanese and Chinese glyphs were not rendered.
+- Fixes some accessibility issues reported by users.
+
 Version 1.1.3 - April 2020
 ==========================
 ## Improvements
@@ -14,7 +24,7 @@ Version 1.1.2 - March 2020
 - Improves query validation in `MSMapLocationFinder`.
 ## Resolved Issues
 - Fixes a missing tiles issue when the map transitions from Globe to web Mercator projection.
-- Fixes an intermittent crash reported in some devices after map disposal.
+- Fixes an intermittent crash reported on some devices after map disposal.
 
 Version 1.1.1 - March 2020
 ==========================
