@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         >
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_poi_search"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -37,7 +37,7 @@
             android:background="@drawable/button_default"
             />
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_poi_tap"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -49,7 +49,7 @@
             android:background="@drawable/button_default"
             />
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_poi_clear"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
