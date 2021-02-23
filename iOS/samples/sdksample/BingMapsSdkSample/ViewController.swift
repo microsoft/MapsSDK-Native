@@ -101,6 +101,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 self.addPin(atLocation: location!, withTitle: "")
                 return true
             }
+            else
+            {
+                let array = self.mapView.findMapElements(atOffset: point);
+                for icon in array {
+                    print("\(icon.zIndex)")
+                }
+            }
             return false
         }
 
@@ -121,7 +128,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func updateMapStyle() {
-        mapView.setStyleSheet(currentStyle.styleSheet)
+        mapView.styleSheet = (currentStyle.styleSheet)
         if #available(iOS 13.0, *) {
             parentView.overrideUserInterfaceStyle = currentStyle.colorScheme
         }

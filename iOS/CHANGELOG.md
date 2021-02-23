@@ -1,5 +1,31 @@
 # Bing Maps SDK for iOS
 
+Version 1.2.0 - February 2021
+=============================
+## Improvements
+- Adds support for photoreal 3D cities.
+- Adds support for route lines and custom route segments.
+- Adds support for view padding and support for near/full visible region.
+- Adds user location features.
+- Adds traffic incidents.
+- Adds vector images support through map style sheets.
+- Adds a new flyout tapped event.
+- Adds a picker that allows users to select a map style.
+- Improves the experience when the map first loads or reloads.
+- Updates the look and feel of the toolbar buttons and adds support for individual button alignment.
+## Resolved Issues
+- Fixes a crash when the app is terminated by the user.
+- Fixes a temporary problem where the map stays partially loaded after a clean install.
+- Fixes intermittent crashes by properly canceling some network requests and other outstanding operations.
+- Fixes an issue causing custom tiles to not load completely.
+- Fixes miscellaneous issues causing the map to return map icons in the wrong order upon a hit test.
+- Fixes display of map icons in raster map render mode.
+## Breaking changes
+- Adds nullability annotations to the SDK.
+- Updates firing tapped events order, from map tapped -> layer tapped to layer tapped -> base-layer tapped -> map tapped.
+- Deprecates `MSMapElementLayerUserDidTapHandler`, use `MSMapElementLayerUserDidTapElementHandler` instead to get tapped elements in hit test order.
+- Replaces `MSMapView`'s method `setStyleSheet` with a new property `StyleSheet`.
+
 Version 1.1.4 - May 2020
 ========================
 ## Improvements
