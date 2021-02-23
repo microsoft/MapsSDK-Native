@@ -94,9 +94,9 @@ class ViewController: UIViewController, UIPickerViewDelegate {
     }
 
     func updateMapViewColorScheme() {
-        mapView.styleSheet = (self.traitCollection.userInterfaceStyle == .dark ?
+        mapView.styleSheet = self.traitCollection.userInterfaceStyle == .dark ?
             MSMapStyleSheets.roadDark() :
-            MSMapStyleSheets.roadLight())
+            MSMapStyleSheets.roadLight()
     }
 
     func setupDemoMenu() {

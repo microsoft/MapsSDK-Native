@@ -121,7 +121,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func updateMapStyle() {
-        mapView.styleSheet = (currentStyle.styleSheet)
+        mapView.styleSheet = currentStyle.styleSheet
         if #available(iOS 13.0, *) {
             parentView.overrideUserInterfaceStyle = currentStyle.colorScheme
         }
