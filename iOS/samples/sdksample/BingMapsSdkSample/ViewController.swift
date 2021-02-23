@@ -101,13 +101,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 self.addPin(atLocation: location!, withTitle: "")
                 return true
             }
-            else
-            {
-                let array = self.mapView.findMapElements(atOffset: point);
-                for icon in array {
-                    print("\(icon.zIndex)")
-                }
-            }
             return false
         }
 
