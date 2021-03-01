@@ -59,7 +59,7 @@ Then, before `dependencies` block, insert following snippet at top level to add 
 >```
 > repositories {
 >     maven {
->         url  "https://microsoft-maps.bintray.com/Maven"
+>         url 'https://microsoftmaps.jfrog.io/artifactory/Maven/'
 >     }
 > }
 >```
@@ -67,7 +67,7 @@ Then, before `dependencies` block, insert following snippet at top level to add 
 And finally, inside `dependencies` block, add the following line:
 
 >```
-> implementation 'com.microsoft.maps:maps-sdk:1.1.4'
+> implementation 'com.microsoft.maps:maps-sdk:1.2.0'
 >```
 
 ## Adding a map view to your activity
